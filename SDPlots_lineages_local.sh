@@ -22,8 +22,6 @@ proj_folder=$(dirname "$0")
 
 mkdir -p $output_folder
 
-make
-
 # get current alias list and lineage dates
 alias=$output_folder"/aliases.tsv"
 lineage_dates=$output_folder"/lineage_dates.tsv"
@@ -70,23 +68,9 @@ for folder in $output_folder/*/ ; do
 	date
 
 	touch $output_folder/control/$country.lock
-	sbatch -o $output_folder/control/$country.out -e $output_folder/control/$country.err -q long -t 10-00:00:00 --mem-per-cpu 10g --cpus-per-task 4 $proj_folder/SDPlots_country.sh $country $folder $threshold
-	if [ "$?" != "0" ]
-	then
-		echo "sbatch failed"
-		exit 1
-	fi
+	./$proj_folder/SDPlots_country.sh $country $folder $threshold
 done
 set -e
-
-set -- $output_folder/control/*.lock
-while [ -f "$1" ]
-do
-	ls $output_folder/control/*.lock | wc -l
-	echo "Sleeping"
-	sleep 30
-	set -- $output_folder/control/*.lock
-done
 
 echo "STARTING ./SDPlots_lineages.sh - 7"
 date

@@ -715,7 +715,10 @@ struct MetadataReader {
         if (std::find(str.begin(), str.end(), l) != str.end())
           return std::find(str.begin(), str.end(), l) - str.begin();
       }
-      throw runtime_error("indexOf not found in the list ");
+      string r = "";
+      for (const string& l : candids)
+        r += " " + l;
+      throw runtime_error("indexOf not found in the list " + r);
     };
     for (; line != "" || getline(file, line); ) {
       //cerr << "line read " << line << endl;
