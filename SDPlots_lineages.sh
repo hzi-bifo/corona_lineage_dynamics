@@ -19,6 +19,7 @@ set -e
 #threshold=0.1
 
 proj_folder=$(dirname "$0")
+proj_folder=.
 
 mkdir -p $output_folder
 
@@ -61,7 +62,7 @@ rm -f $output_folder/control/*.lock
 set +e
 # data for countries are written in separate folders; loop over all folders to perform analysis
 for folder in $output_folder/*/ ; do
-	country=$(basename $folder)
+	country=$(basename "$folder")
 	if [ "$country" == "control" ]; then continue; fi
 	if [[ "$country" =~ \ |\' ]]; then continue; fi
 
@@ -70,7 +71,7 @@ for folder in $output_folder/*/ ; do
 	date
 
 	touch $output_folder/control/$country.lock
-	sbatch -o $output_folder/control/$country.out -e $output_folder/control/$country.err -q long -t 10-00:00:00 --mem-per-cpu 10g --cpus-per-task 4 $proj_folder/SDPlots_country.sh $country $folder $threshold
+	sbatch -o $output_folder/control/$country.out -e $output_folder/control/$country.err -q long -t 10-00:00:00 --mem-per-cpu 10g --cpus-per-task 5 $proj_folder/SDPlots_country.sh $country $folder $threshold
 	if [ "$?" != "0" ]
 	then
 		echo "sbatch failed"

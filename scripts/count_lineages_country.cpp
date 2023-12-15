@@ -737,14 +737,14 @@ struct MetadataReader {
       //cerr << "line split " << x << endl;
       if (id_index == -1) {
         //cerr << "reading header " << x << endl;
-        name_index = indexOf(x, {"Virus name", "Virus.name", "virus_name", "sequence_name"});
-        id_index = indexOf(x, {"Accession ID", "Accession.ID", "accession_id", "sequence_name"});
-        date_index = indexOf(x, {"Collection date", "Collection.date", "collection_date", "sample_date"});
+        name_index = indexOf(x, {"Virus name", "Virus.name", "virus_name", "sequence_name", "virus"});
+        id_index = indexOf(x, {"Accession ID", "Accession.ID", "accession_id", "sequence_name", "gisaid_epi_isl"});
+        date_index = indexOf(x, {"Collection date", "Collection.date", "collection_date", "sample_date", "date"});
         location_index = indexOf(x, {"Location", "country"});
         location_addition_index = indexOf(x, {"Additional.location.information", "Additional location information"});
         //collection_date_index = indexOf(x, {"Submission date"});
         collection_date_index = indexOf(x, {"Collection date", "Collection.date", "sample_date"});
-        pangolin_index = indexOf(x, {"Pango lineage", "Pango.lineage"});
+        pangolin_index = indexOf(x, {"Pango lineage", "Pango.lineage", "pangolin_lineage", "Lineage"});
         line = "";
         //cerr << "header loaded " << x << endl;
         continue;

@@ -4,7 +4,7 @@ country=$1
 folder=$2
 threshold=$3
 
-proj_folder=$(dirname "$0")
+proj_folder=.
 
 
 # if there's only one season with more than 0 sequences in the results left, don't analyze data and skip to next folder

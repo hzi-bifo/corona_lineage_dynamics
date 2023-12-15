@@ -51,10 +51,16 @@ get_heatmap <- function(folder, countries, current_month, output_name, rename, c
   current_month_all_hifreq_data_list <- list() #matrix(data = 0, nrow = length(sign_lineages), ncol = length(countries))
 
   for (country in countries){
-    tmp <- read.csv(paste(folder, "/", country, "/", country, "_frequencies.txt", sep = ""), stringsAsFactors = FALSE, sep = "\t", header = TRUE) #, na.strings=c("NA"))
- #   tmp[is.na(tmp)] <- 0
-    #current_month_colname <- paste0("X", gsub("-", ".", current_month, fixed = TRUE))
-    current_month_country_data <- tmp[, c('lineage', current_month_colname), drop=FALSE]
+    if (file.exists(paste(folder, "/", country, "/", country, "_frequencies.txt", sep = ""))) {
+      tmp <- read.csv(paste(folder, "/", country, "/", country, "_frequencies.txt", sep = ""), stringsAsFactors = FALSE, sep = "\t", header = TRUE) #, na.strings=c("NA"))
+   #   tmp[is.na(tmp)] <- 0
+      #current_month_colname <- paste0("X", gsub("-", ".", current_month, fixed = TRUE))
+      current_month_country_data <- tmp[, c('lineage', current_month_colname), drop=FALSE]
+    } else {
+      tmp <- data.frame(matrix(ncol = length(current_month_colname) + 1, nrow = 0))
+      colnames(tmp) <- c('lineage', current_month_colname)
+    }
+
     # get the lineages with freq >=0.1
     current_month_all_hifreq_data_list[[country]] <- current_month_country_data[current_month_country_data[,current_month_colname]>=0.01&(!is.na(current_month_country_data[,current_month_colname])),,drop=F]
     for (lineage in sign_lineages){

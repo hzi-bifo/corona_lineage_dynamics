@@ -59,16 +59,16 @@ rm -f $output_folder/control/*.lock
 set +e
 # data for countries are written in separate folders; loop over all folders to perform analysis
 for folder in $output_folder/*/ ; do
-	country=$(basename $folder)
+	country=$(basename "$folder")
 	if [ "$country" == "control" ]; then continue; fi
 	if [[ "$country" =~ \ |\' ]]; then continue; fi
 
-	echo "$folder"
+	#echo -n "$country $folder"
 	echo "STARTING ./SDPlots_lineages.sh - $folder"
 	date
 
 	touch $output_folder/control/$country.lock
-	./$proj_folder/SDPlots_country.sh $country $folder $threshold
+	bash $proj_folder/SDPlots_country_local.sh $country $folder $threshold
 done
 set -e
 
