@@ -337,11 +337,17 @@ if ("Germany" %in% countries) {
   states <- c("DE_BB", "DE_BE", "DE_BW", "DE_BY", "DE_HB", "DE_HE", "DE_HH", "DE_MV" 
             ,"DE_NI", "DE_NW", "DE_RP", "DE_SH", "DE_SL", "DE_SN", "DE_ST", "DE_TH")
 
-  sliding_fisher_all_c(gisaid_data_germany$pangolin_lineage, gisaid_data_germany$state_code, gisaid_data_germany$date, states, w, step, freq_threshold, voc, output_folder, p.adjust)
 
   list_gisaid_data_state <- split(gisaid_data_germany, gisaid_data_germany$state_code)
+  # message("Initial states: ", names(list_gisaid_data_state))
   # Filter out state dataframes with fewer than 200 rows
   list_gisaid_data_state <- list_gisaid_data_state[sapply(list_gisaid_data_state, nrow) >= 200]
+  # message("Filtered states: ", names(list_gisaid_data_state))
+
+  gisaid_data_germany = gisaid_data_germany[gisaid_data_germany$state_code %in% names(list_gisaid_data_state), ]
+
+  sliding_fisher_all_c(gisaid_data_germany$pangolin_lineage, gisaid_data_germany$state_code, gisaid_data_germany$date, names(list_gisaid_data_state), w, step, freq_threshold, voc, output_folder, p.adjust)
+
   ## Use detectCores() to find the total number of cores
   #num_cores <- parallel::detectCores()
 
