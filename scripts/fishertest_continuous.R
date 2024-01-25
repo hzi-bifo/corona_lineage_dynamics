@@ -5,8 +5,8 @@ library("plyr")
 library("tidyr")
 library("stringr")
 library("readr")
-library('dplyr')
-if(!require("tictoc")){
+suppressWarnings(suppressMessages(library("dplyr")))
+if (!require("tictoc")) {
   install.packages("tictoc")
 }
 
@@ -40,7 +40,7 @@ thisPath <- function() {
 # Sys.setlocale("LC_CTYPE", "en_US.UTF-8")
 sourceCpp(paste0(thisPath(), "/fishertest_continuous_sliding_fisher.cc"))
 
-args = commandArgs(trailingOnly=TRUE)
+args <- commandArgs(trailingOnly=TRUE)
 file <- args[1]
 freq_threshold <- as.numeric(args[2])
 output_folder <- args[3]
@@ -193,21 +193,22 @@ gisaid_data_all_tibble <- read_tsv(
   n_max = Inf,
   guess_max = min(1000, Inf),
   skip_empty_rows = TRUE,
+  show_col_types = FALSE
 )
 
 gisaid_data_all <- as.data.frame(gisaid_data_all_tibble) %>% 
   select(`Pango lineage`, `Collection date`, `Location`, `Host`) %>%
   rename(pangolin_lineage = `Pango lineage`,
-        date = `Collection date`
+    date = `Collection date`
   ) %>%
-  filter(Host=="Human") %>%
-  filter(!is.na(pangolin_lineage),
-    pangolin_lineage != "Unassigned",
-    pangolin_lineage != "",
+  filter(Host == "Human") %>%
+  filter(
+    # !is.na(pangolin_lineage),
+    # pangolin_lineage != "Unassigned", # The Susanne version doesn't check it.
+    # pangolin_lineage != "", # The Susanne version doesn't check it.
     !grepl("/", pangolin_lineage, fixed = TRUE)) %>%
   filter(grepl("^20\\d{2}-\\d{2}-\\d{2}$", date))
 
-# gisaid_data_all <- gisaid_data_all[order(gisaid_data_all$date),]
 
 
 # add country and division column
@@ -217,19 +218,23 @@ gisaid_data_all <- as.data.frame(gisaid_data_all_tibble) %>%
 # added city
 gisaid_data_all[c("region", "country", "division", "city")] <- str_split_fixed(gisaid_data_all$Location, " / ", 4)
 
+gisaid_data_all <- gisaid_data_all[order(gisaid_data_all$date), ]
 
 print(head(gisaid_data_all))
 
-# create list of dataframes for all country
-list_gisaid_data_country <- split(gisaid_data_all, gisaid_data_all$country)
-# list_gisaid_data_country <- gisaid_data_all %>%
-#   group_split(country)
+# # create list of dataframes for all country
+# list_gisaid_data_country <- split(gisaid_data_all, gisaid_data_all$country)
+# # list_gisaid_data_country <- gisaid_data_all %>%
+# #   group_split(country)
 
 
-# Filter out country dataframes with fewer than 2000 rows
-list_gisaid_data_country <- list_gisaid_data_country[sapply(list_gisaid_data_country, nrow) >= 2000]
+# # Filter out country dataframes with fewer than 2000 rows
+# list_gisaid_data_country <- list_gisaid_data_country[sapply(list_gisaid_data_country, nrow) >= 2000]
 
-countries <- names(list_gisaid_data_country)
+# countries <- names(list_gisaid_data_country)
+numbers <- table(gisaid_data_all$country)
+countries <- names(numbers[numbers > 2000])
+
 
 print("Analysis for countries: ")
 print(paste(countries, collapse = ", "))
@@ -316,13 +321,15 @@ sliding_fisher_all_c(gisaid_data_all$pangolin_lineage, countrycode(gisaid_data_a
 #print(stop - start)
 
 ### analysis on German state-wise data ###
-print("Analysis for German State-wise data")
-w = 200
-step = 10
 
 if ("Germany" %in% countries) {
-  gisaid_data_germany <- list_gisaid_data_country[["Germany"]]  %>%
-    arrange(date)
+  print("Analysis for German State-wise data")
+  w = 200
+  step = 10
+  # gisaid_data_germany <- list_gisaid_data_country[["Germany"]]  %>%
+  #   arrange(date)
+  
+  gisaid_data_germany <- gisaid_data_all[gisaid_data_all$country == "Germany", ]
   
   states_de <- list("Baden-Wuerttemberg" = "DE_BW", "Bavaria" = "DE_BY", "Berlin" = "DE_BE", 
                     "Brandenburg" = "DE_BB", "Bremen" = "DE_HB", "Hamburg" = "DE_HH", "Hesse" = "DE_HE", 
@@ -341,10 +348,12 @@ if ("Germany" %in% countries) {
   list_gisaid_data_state <- split(gisaid_data_germany, gisaid_data_germany$state_code)
   # message("Initial states: ", names(list_gisaid_data_state))
   # Filter out state dataframes with fewer than 200 rows
-  list_gisaid_data_state <- list_gisaid_data_state[sapply(list_gisaid_data_state, nrow) >= 200]
+  list_gisaid_data_state <- list_gisaid_data_state[sapply(list_gisaid_data_state, nrow) >= 200 & names(list_gisaid_data_state) != "NULL"]
   # message("Filtered states: ", names(list_gisaid_data_state))
 
   gisaid_data_germany = gisaid_data_germany[gisaid_data_germany$state_code %in% names(list_gisaid_data_state), ]
+  print(head(gisaid_data_germany))
+  print(names(list_gisaid_data_state))
 
   sliding_fisher_all_c(gisaid_data_germany$pangolin_lineage, gisaid_data_germany$state_code, gisaid_data_germany$date, names(list_gisaid_data_state), w, step, freq_threshold, voc, output_folder, p.adjust)
 

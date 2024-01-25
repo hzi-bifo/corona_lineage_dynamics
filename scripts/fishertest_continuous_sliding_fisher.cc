@@ -569,12 +569,34 @@ int first_match(int lb, int ub, Eval eval) {
     return lb + 1;
 }
 
-vector<tuple<int, string, double, double, double>> sliding_fisher(const map<string, int>& lineage_index, vector<pair<int,string>>& gisaid_data, int w, int step, double freq_threshold, const set<int> voc, Function p_adjust) {
+
+struct PVAL_ODD_FREQS_DEBUG_INFO {
+    int i;
+    int this_mut, this_nomut, prev_mut, prev_nomut;
+    PVAL_ODD_FREQS_DEBUG_INFO(int i, int this_mut, int this_nomut, int prev_mut, int prev_nomut) :
+        i(i), this_mut(this_mut), this_nomut(this_nomut), prev_mut(prev_mut), prev_nomut(prev_nomut) {
+
+    }
+
+};
+ostream& operator<<(ostream& os, const PVAL_ODD_FREQS_DEBUG_INFO& d) {
+    // return os << "[" << d.i << "," << d.this_mut << "," << d.this_nomut <<","<< d.prev_mut << "," << d.prev_nomut << "]";
+    return os << "[" << d.i << "," << d.this_mut << "," << d.prev_mut << "]";
+}
+
+// gisaid_data: contains lineage and date for the current country
+vector<tuple<int, string, double, double, double>> sliding_fisher(const map<string, int>& lineage_index, vector<pair<int,string>>& gisaid_data, int w, int step, double freq_threshold, const set<int>& voc, Function p_adjust) {
+    // in the original version, if the lineage is "" or "None", the function keeps the rows, but the lineage
+    //   is not considered to be valid, so not considered as an instance of it. In C++ version, we keep the row
+    //   with -1 as its lineage to simulate the original behaviour.
+
     if (gisaid_data.size() < w*2){
         Rcerr << "Not enough data for chosen window size." << endl;
         // return(data.frame(lineage = character(), date = character(), pval = numeric(), odds = numeric(), freq = numeric(), stringsAsFactors = FALSE))
         return vector<tuple<int, string, double, double, double>>();
     }
+
+    // Rcerr << "lineage_index: " << lineage_index << endl;
 
     const double p_value_threshold = 0.05;
 
@@ -586,8 +608,11 @@ vector<tuple<int, string, double, double, double>> sliding_fisher(const map<stri
     // Rcerr << "filling index_lineage" << endl;
     map<int, string> index_lineage;
     for (auto const& i : lineage_index) {
+        assert_(index_lineage.find(i.second) == index_lineage.end());
         index_lineage[i.second] = i.first;
     }
+
+    // Rcerr << "index_lineage: " << index_lineage << endl;
 
     // Rcerr << "filling all_lineages" << endl;
     vector<int> all_lineages;
@@ -597,8 +622,9 @@ vector<tuple<int, string, double, double, double>> sliding_fisher(const map<stri
     }
     sort(all_lineages.begin(), all_lineages.end());
     all_lineages.erase(unique(all_lineages.begin(), all_lineages.end()), all_lineages.end());
-    sort(all_lineages.begin(), all_lineages.end(), [index_lineage](int a, int b) {return index_lineage.find(a)->second < index_lineage.find(b)->second;});
+    sort(all_lineages.begin(), all_lineages.end(), [&index_lineage](int a, int b) {return index_lineage.find(a)->second < index_lineage.find(b)->second;});
 
+    // this shows index in pval_odd_freqs vector, other main variables contain lineage_index (as index of the outer function)
     map<int, int> lineage_to_index;
     for (size_t ll = 0; ll < all_lineages.size(); ll++) {
         lineage_to_index[all_lineages[ll]] = ll;
@@ -611,7 +637,7 @@ vector<tuple<int, string, double, double, double>> sliding_fisher(const map<stri
     // cerr << "Lineages " << all_lineages_name << endl;
 
     //for a given mut_this_season, calulate lower and upper bounds 
-    // for a value of mut_this_season the value mut_prev_season sould be mut_prev_season < mut_this_season_thrshold_ub[mut_this_season]
+    // for a value of mut_this_season the value mut_prev_season sould be mut_prev_season < mut_this_season_thrshold_ub[mut_this_season] then the fisher test is accepted.
     vector<int> mut_this_season_thrshold_ub;
     for (int mut_this_season = 0; mut_this_season <= w; mut_this_season++) {
         // cerr << "mut_this_season_thrshold_bounds " << mut_this_season << endl;
@@ -661,6 +687,7 @@ vector<tuple<int, string, double, double, double>> sliding_fisher(const map<stri
 
     // map<pair<int,int>, tuple<int,int,int,int>> debug_mut_info;
 
+    // vector<vector<tuple<double, double, double, string, PVAL_ODD_FREQS_DEBUG_INFO>>> pval_odd_freqs;
     vector<vector<tuple<double, double, double, string>>> pval_odd_freqs;
     // // for (size_t l = 0; l < lineage_index.size(); l++) {
     // for (auto l : all_lineages) {
@@ -711,6 +738,8 @@ vector<tuple<int, string, double, double, double>> sliding_fisher(const map<stri
     // size_t size_2 = (gisaid_data.size() - w - w + 1) / step + 1, size_3 = 0;
     // assert_(pval_odd_freqs[0].size() == (gisaid_data.size() - w - w + 1) / step + 1);
 
+    //for each lineage, list of pval oddratio freq date index(for debug), if the fisher test passes for that i
+    // pval_odd_freqs = vector<vector<tuple<double, double, double, string, PVAL_ODD_FREQS_DEBUG_INFO>>>(all_lineages.size());
     pval_odd_freqs = vector<vector<tuple<double, double, double, string>>>(all_lineages.size());
     map<int, int> lineage_mut_prev_season, lineage_mut_this_season;
     set<int> active_lineages;
@@ -774,6 +803,8 @@ vector<tuple<int, string, double, double, double>> sliding_fisher(const map<stri
             // }
 
             for (auto const& l : active_lineages) {
+            // following version of the loop goes over all the lineages, just for debug.
+            // for (auto const& l : all_lineages) { // for debug
                 int start = i, end = i + w,
                     prev_start = i - w, prev_end = i;
 
@@ -792,13 +823,19 @@ vector<tuple<int, string, double, double, double>> sliding_fisher(const map<stri
                 double oddsratio = fisher22_oddsratio(mut_this_season, mut_prev_season, nomut_this_season, nomut_prev_season);
 
                 // cerr << "FT: " << l << " " << find_if(lineage_index.begin(), lineage_index.end(), [l](auto const& it) {return it.second == l;})->first << " " << i << " " << mut_this_season << " " << mut_prev_season << " " << nomut_this_season << " " << nomut_prev_season << " ft=" << pvalue << endl;
+                // if (index_lineage.find(l) != index_lineage.end() && index_lineage[l] == "AY.42") {
+                //     Rcerr << i << " " << index_lineage[l] << " " << pvalue << " " << oddsratio << " [" << mut_this_season << " " <<  mut_prev_season << " " << nomut_this_season << " " << nomut_prev_season << "]" << endl;
+                // }
 
                 // if ((pvalue < 0.05) != (active_lineages.find(l) != active_lineages.end())) {
                 //     Rcerr << "pv=" << pvalue << " " << (active_lineages.find(l) != active_lineages.end()) << " l=" << l << " i=" << i << " (" << lineage_mut_this_season[l] << " " << lineage_mut_prev_season[l] << ") " << active_lineages << endl;
                 // }
                 // assert_((pvalue < 0.05) == (active_lineages.find(l) != active_lineages.end()));
-
-                pval_odd_freqs[lineage_to_index[l]].push_back(make_tuple(pvalue, oddsratio, mut_this_season * 1.0 / w, gisaid_data[i+w-1].second));
+                
+                // pval_odd_freqs[lineage_to_index[l]].push_back(make_tuple(pvalue, oddsratio, mut_this_season * 1.0 / w, i+w < gisaid_data.size() ? gisaid_data[i+w-1].second : gisaid_data.back().second, PVAL_ODD_FREQS_DEBUG_INFO(i, mut_this_season, nomut_this_season, mut_prev_season, nomut_prev_season)));
+                // assert_(lineage_to_index.find(l) != lineage_to_index.end());
+                if (lineage_to_index.find(l) != lineage_to_index.end())
+                    pval_odd_freqs[lineage_to_index[l]].push_back(make_tuple(pvalue, oddsratio, mut_this_season * 1.0 / w, i+w < gisaid_data.size() ? gisaid_data[i+w-1].second : gisaid_data.back().second));
             }
             
         } else {
@@ -816,6 +853,53 @@ vector<tuple<int, string, double, double, double>> sliding_fisher(const map<stri
         //     }
         // }
     }
+
+    // // DEBUG:
+    // Rcerr << "pval non-corrected for " << "JN.1" << ": "; 
+    // for (size_t li=0 ; li<pval_odd_freqs.size(); li++) {
+    //     int l = all_lineages[li];
+    //     if (index_lineage[l] != "JN.1") continue;
+    //     bool isvoc = voc.find(l) != voc.end();
+    //     for (size_t k=0; k < pval_odd_freqs[li].size(); k++) {
+    //         Rcerr << std::get<4>(pval_odd_freqs[li][k]) <<":" << std::get<0>(pval_odd_freqs[li][k]) << " ";
+    //     }
+    // }
+    // Rcerr << endl;
+    // Rcerr << "pval non-corrected for " << "col=1000" << ": "; 
+    // for (size_t li=0 ; li<pval_odd_freqs.size(); li++) {
+    //     int l = all_lineages[li];
+    //     bool isvoc = voc.find(l) != voc.end();
+    //     for (size_t k=0; k < pval_odd_freqs[li].size(); k++) {
+    //         if (k != 0) continue;
+    //         Rcerr << std::get<4>(pval_odd_freqs[li][k]) <<":" << std::get<0>(pval_odd_freqs[li][k]) << " ";
+    //     }
+    // }
+    // Rcerr << endl;
+    // ofstream fo("debug_info_c.txt");
+    // int i_index_d = 0;
+    // for (auto const& i : gisaid_data) {
+    //     fo << i_index_d+1 << " " << (i.first != -1 ? index_lineage[i.first] : "NA") << " " << i.second << " " << i.first << endl;
+    //     // if (i_index_d % 100 == 0 && i_index_d >= 70000)
+    //     // if (i_index_d >= 70200 && i_index_d <= 70300)
+    //     //     // Rcerr << i_index_d+1 << ":" << (index_lineage[i.first] == "JN.1" ? 1 : 0) << index_lineage[i.first] << "," << i.second << " ";
+    //         // Rcerr <<  i.second << " ";
+    //     if (index_lineage[i.first] == "AY.42")
+    //         Rcerr << i_index_d+1 << "," << i.second << " ";
+    //     i_index_d++;
+    // }
+    // Rcerr << endl;
+    // i_index_d = 0;
+    // for (auto const& i : gisaid_data) {
+        // if (i_index_d % 100 == 0 && i_index_d >= 70000)
+        // if (i_index_d >= 70200 && i_index_d <= 70300)
+            // Rcerr << i_index_d+1 << ":" << (index_lineage[i.first] == "JN.1" ? 1 : 0) << index_lineage[i.first] << "," << i.second << " ";
+            // Rcerr << index_lineage[i.first] << " ";
+        // if (index_lineage[i.first] == "JN.1")
+        //     Rcerr << i_index_d+1 << "," << i.second << " ";
+    //     i_index_d++;
+    // }
+    // Rcerr << endl;
+  
 
     // assert_(size_2 == size_3);
 
@@ -850,6 +934,19 @@ vector<tuple<int, string, double, double, double>> sliding_fisher(const map<stri
         // cerr << endl;
     }
 
+    // // DEBUG:
+    // Rcerr << "pval corrected for " << "AY.23" << ":"; 
+    // for (size_t li=0 ; li<pval_odd_freqs.size(); li++) {
+    //     int l = all_lineages[li];
+    //     if (index_lineage[l] != "AY.23") continue;
+    //     bool isvoc = voc.find(l) != voc.end();
+    //     for (size_t k=0; k < pval_odd_freqs[li].size(); k++) {
+    //         Rcerr << std::get<0>(pval_odd_freqs[li][k]) << " ";
+            
+    //     }
+    // }
+    // Rcerr << endl;
+  
     // Rcerr << "filling sign_results" << endl;
     vector<tuple<int, string, double, double, double>> sign_results;
     for (size_t li=0 ; li<pval_odd_freqs.size(); li++) {
@@ -881,6 +978,7 @@ void sliding_fisher_all_c(CharacterVector gisaid_data_all_pango_lineage, Charact
     map<string, int> country_index;
     vector<vector<pair<int, string>>> country_lineage_date;
 
+    // ofstream debug_os("debug_info_o2.txt");
     // cerr << "compressing " << gisaid_data_all_pango_lineage.size() << endl;
     for (size_t i = 0; i < gisaid_data_all_pango_lineage.size(); i++) {
         // string lin = row[column_index_map["pango_lineage"]],
@@ -890,15 +988,22 @@ void sliding_fisher_all_c(CharacterVector gisaid_data_all_pango_lineage, Charact
             date = Rcpp::as<string>(gisaid_data_all_date[i]);
         // cerr << "r " << lin << " " << country << endl;
         if (lineage_index.find(lin) == lineage_index.end()) {
-            if (lin != "" && lin != "None")
+            // Although the original code outputs the unassigned lineage, we should ignore it, it is not an actual lineage.
+            if (lin != "" && lin != "None" && lin != "NA" && lin != "Unassigned")
                 lineage_index[lin] = lineage_index.size();
         }
         if (country_index.find(country) == country_index.end()) {
             country_index[country] = country_index.size();
             country_lineage_date.push_back(vector<pair<int, string>>());
         }
+        //DEBUG:
+        // if (country == "BR") {
+        //     debug_os << i << "," << country_lineage_date[country_index[country]].size() << "," << date << " " << lin << " " << (lineage_index.find(lin) != lineage_index.end() ? lineage_index[lin] : -1) << " " << endl;
+        // }
         country_lineage_date[country_index[country]].push_back(make_pair(lineage_index.find(lin) != lineage_index.end() ? lineage_index[lin] : -1, date));
     }
+    //DEBUG:
+    // Rcerr << endl;
 
     // cerr << "country_index: " << country_index << endl;
     // cerr << "lineage_index: " << lineage_index << endl;
@@ -907,6 +1012,8 @@ void sliding_fisher_all_c(CharacterVector gisaid_data_all_pango_lineage, Charact
     // vector<string> voc {"B.1.1.7", "B.1.351", "P.1", "B.1.617", "B.1.617.1", "B.1.617.2", "B.1.617.3"};
     set<int> voc_index;
     for (auto const& v : voc) {
+        if (lineage_index.find(Rcpp::as<string>(v)) == lineage_index.end())
+            lineage_index[Rcpp::as<string>(v)] = lineage_index.size();
         voc_index.insert(lineage_index[Rcpp::as<string>(v)]);
     }
 
