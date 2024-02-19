@@ -1,6 +1,6 @@
 # SDplots_lineages
 
-This repository contains scripts to calculate frequences of pangolin lineages based on the Gisaid metadata file and to evaluate and plot the trajectories using the fishertest and visualitation from the SD plots pipeline.
+This repository contains scripts to calculate frequences of pangolin lineages based on the GISAID metadata file and to compute and visualize their trajectories.
 
 ## Installation
 To fetch the repository run:
@@ -37,7 +37,7 @@ bash SDplots_lineages_local.sh \
   <Threshold>
 ```
 
-where the Metadata file is the metadata file downloaded from Gisaid, the Months file is a file listing all months to be analysed (see the example in the folder testdata), the output folder is the name of the folder generated to store all results in, and the threshold is the frequency threshold for considering a lineage predominant (for SARS-CoV-2, a low value like 0.1 makes sense). 
+where the Metadata file is the metadata file downloaded from GISAID, the Months file is a file listing all months to be analysed (see the example in the folder testdata), the output folder is the name of the folder generated to store all results in, and the threshold is the frequency threshold for considering a lineage predominant (for SARS-CoV-2, a low value like 0.1 makes sense). 
 
 A sample (simulated) dataset is provided in folder `testdata` for testing. 
 First we need to create an output folder:
