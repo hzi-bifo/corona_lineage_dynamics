@@ -41,3 +41,23 @@ bash SDPlots_lineages_local.sh testdata/metadata_subset.tsv testdata/months.txt 
 * `test`: some test codes
 
   
+## Running on sample data
+A sample (simulated) dataset is provided in folder `testdata`. Run all the following commands from inside the github repository folder.
+
+To execute the pipeline, we need an output folder. It could be created with the following command
+```
+mkdir out
+```
+Note that if the folder already exists, it would be better to erase its contents.
+
+Some packages are required by R for the pipeline. These could be installed with the following command (this could take several minutes).
+```
+Rscript -e 'install.packages(c("XML", "binom", "plotly", "htmlwidgets", "countrycode", "doParallel", "dplyr", "foreach", "htmltools", "plyr", "Rcpp", "RCurl", "readr", "stringr", "tictoc", "tidyr", "xtable"), repos="https://cloud.r-project.org"); if (!require("devtools")) install.packages("devtools", repos="https://cloud.r-project.org"); devtools::install_github("rstudio/d3heatmap");'
+```
+
+The whole pipeline could be executed on this dataset with the following command
+```
+./SDPlots_lineages_local.sh testdata/metadata.tsv testdata/months.txt out/ 0.1
+```
+  
+
