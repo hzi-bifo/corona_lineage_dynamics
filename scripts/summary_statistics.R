@@ -124,8 +124,8 @@ get_heatmap <- function(folder, countries, current_month, output_name, rename, c
   }
 
   if (nrow(data)>1){
-        print(dim(data))
-        print('test in sig lineage')
+        base::print(dim(data))
+        base::print('test in sig lineage')
         row.names(data) <- paste0(row.names(data), '*')
         heatmap <- d3heatmap(data, Rowv = NULL, Colv = NULL, colors = "Blues", xaxis_font_size = "12pt", xaxis_height = xaxis_height, yaxis_width = 120, yaxis_font_size = "11pt", height = height, width = "100%")
         heatmap_final <- tagList(
@@ -139,14 +139,14 @@ get_heatmap <- function(folder, countries, current_month, output_name, rename, c
         #heatmap2 <- heatmaply(data, Rowv = NULL, Colv = NULL, cluster_rows = FALSE, cluster_cols = FALSE)#, k_row = NA, k_col = NA)
         #saveWidget(heatmap2, paste0(folder, "/", output_name, "_heatmap_plotly.html"))
   } else if (nrow(data)==1) { # Heatmap cannot be built with only one row, saving a table instead
-      print("1 sig lineage, making table")
-      print(xtable(data), type = "html", file = paste(folder, "/", output_name, "_heatmap.html", sep = ""))
+      base::print("1 sig lineage, making table")
+      base::print(xtable(data), type = "html", file = paste(folder, "/", output_name, "_heatmap.html", sep = ""))
   } else if (nrow(current_month_all_hifreq_data)>1) { #else if
         #print(current_month_all_hifreq_data)
-        print(dim(current_month_all_hifreq_data))
+        base::print(dim(current_month_all_hifreq_data))
         current_month_all_hifreq_data[is.na(current_month_all_hifreq_data)] <- 0
-        print(current_month_all_hifreq_data)
-        print('test in hi freq lineage')
+        base::print(current_month_all_hifreq_data)
+        base::print('test in hi freq lineage')
         heatmap <- d3heatmap(current_month_all_hifreq_data, Rowv = NULL, Colv = NULL, colors = "Blues", xaxis_font_size = "12pt", yaxis_font_size = "11pt", xaxis_height = xaxis_height, yaxis_width = 120, height = height, width = "100%")
         heatmap_final <- tagList(
           tags$h3(style = "text-align: left;", current_month),
@@ -159,7 +159,7 @@ get_heatmap <- function(folder, countries, current_month, output_name, rename, c
         #heatmap2 <- heatmaply(current_month_all_hifreq_data, Rowv = NULL, Colv = NULL)#, k_row = NA, k_col = NA)
         #saveWidget(heatmap2, paste0(folder, "/", output_name, "_heatmap_plotly.html"))#, selfcontained = TRUE)
   } else {
-      print('no data available')
+      base::print('no data available')
       data_available <- FALSE
       return(data_available)
   }
@@ -181,7 +181,7 @@ x <- get_heatmap(folder, countries, current_month, "summary", TRUE, cutoff)
 if (!is.null(x)){
   while (!is.null(x)){ # x == FALSE
     month_len <- month_len + 1
-    print(current_month)
+    base::print(current_month)
     x <- get_heatmap(folder, countries, current_month, "summary", TRUE, cutoff)
   }
 }
@@ -193,7 +193,7 @@ if (!is.null(y)){
   while (!is.null(y)){
     month_len <- month_len + 1
     current_month <- months[length(months)-month_len]
-    print(current_month)
+    base::print(current_month)
     y <- get_heatmap(folder, states, current_month, "summary_states", FALSE, cutoff)
   }
 }
