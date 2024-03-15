@@ -174,7 +174,7 @@ countries <- dir(path = folder, pattern = "^[A-Z][A-Z]$") # only countries, not 
 states <- dir(path = folder, pattern = "^DE_") # only German states
 
 months <- as.vector(t(read.table(months_file, stringsAsFactors = FALSE)))
-month_len <- 0
+month_len <- 1
 current_month <- months[length(months)-month_len]
 #current_month <- months[length(months)-1] # look at frequencies of the previous month to get representative values
 x <- get_heatmap(folder, countries, current_month, "summary", TRUE, cutoff)
@@ -186,7 +186,7 @@ if (!is.null(x)){
   }
 }
 
-month_len <- 0
+month_len <- 1
 current_month <- months[length(months)-month_len]
 y <- get_heatmap(folder, states, current_month, "summary_states", FALSE, cutoff)
 if (!is.null(y)){
