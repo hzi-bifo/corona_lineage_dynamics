@@ -48,7 +48,7 @@ Note that if the folder already exists, it would be better to erase its contents
 
 To analyse the test data, run:
 ```shell
-bash SDPlots_lineages_local.sh testdata/metadata_subset.tsv testdata/months.txt outputs 0.1
+bash SDPlots_lineages_local.sh testdata/metadata.tsv testdata/months.txt outputs 0.1
 ```
 
 
