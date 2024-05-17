@@ -1,4 +1,4 @@
-name: cld
+name: corona_lineage_dynamics
 channels:
   - conda-forge
   - defaults
@@ -13,4 +13,3 @@ dependencies:
   - r-mass
   - r-matrix
   - pkg-config
-prefix: /home/hforoughmand/anaconda3/envs/cld

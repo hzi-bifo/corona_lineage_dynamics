@@ -13,7 +13,7 @@ Creating conda environment with required dependencies is the simplest way.
 For making the C/C++ codes, C++ compiler with boost_regex development packages required to be installed.
 ```
 conda env create -f environment.yml
-conda activate cld
+conda activate corona_lineage_dynamics
 ```
 
 Then, we compile the C++ codes.
