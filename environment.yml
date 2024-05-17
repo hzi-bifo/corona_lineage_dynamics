@@ -1,0 +1,16 @@
+name: cld
+channels:
+  - conda-forge
+  - defaults
+dependencies:
+  - boost
+  - boost-cpp
+  - c-compiler
+  - curl
+  - cxx-compiler
+  - make
+  - r-base
+  - r-mass
+  - r-matrix
+  - pkg-config
+prefix: /home/hforoughmand/anaconda3/envs/cld

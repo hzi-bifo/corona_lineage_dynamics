@@ -7,9 +7,19 @@ To fetch the repository run:
 ```shell
 git clone git@github.com:hzi-bifo/corona_lineage_dynamics.git
 cd corona_lineage_dynamics
+```
+
+Creating conda environment with required dependencies is the simplest way. 
+For making the C/C++ codes, C++ compiler with boost_regex development packages required to be installed.
+```
+conda env create -f environment.yml
+conda activate cld
+```
+
+Then, we compile the C++ codes.
+```
 make
 ```
-For making the C/C++ codes, C++ compiler with boost_regex development packages required to be installed.
 
 Some packages are required by R for the pipeline. These could be installed with the following command (this could take several minutes).
 ```
