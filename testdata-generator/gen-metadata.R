@@ -1,5 +1,8 @@
+library(stringi)
 
 n = 20000
+
+mutations <- c("Spike_D123G", "Spike_F68K", "Spike_K2L", "Spike_P99S")
 
 locations <- c("Europe / Germany / Berlin",
                "Europe / Germany / Brandenburg")
@@ -108,7 +111,7 @@ data <- data.frame(
 "Pango lineage" = sample(lineages, n, replace=TRUE),
 "Pango version" = "consensus", 
 "Variant" = "call", 
-"AA Substitutions" = NA, 
+"AA Substitutions" = sapply(seq(1,n), function(x) paste("(", paste(sample(mutations, sample.int(min(n, length(mutations)), 1)), collapse=","), ")", sep="")), 
 "Submission date" = sample(seq(as.Date('2020-01-01'), as.Date('2021-12-31'), by="day"), n, replace=TRUE), 
 "Is reference?" = FALSE,
 "Is complete?" = TRUE,
