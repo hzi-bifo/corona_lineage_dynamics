@@ -47,8 +47,8 @@ $proj_folder/scripts/count_lineages_country $gisaid_file $time $output_folder "t
 echo "STARTING ./SDPlots_lineages.sh - 4"
 date
 # count lineages for German states
-Rscript $proj_folder/scripts/count_lineages_states.R $gisaid_file $time $output_folder "false" $alias $lineage_dates
-Rscript $proj_folder/scripts/count_lineages_states.R $gisaid_file $time $output_folder "true" $alias $lineage_dates
+Rscript $proj_folder/scripts/count_lineages_states.R "$(dirname $gisaid_file)/DE.metadata.tsv" $time $output_folder "false" $alias $lineage_dates
+Rscript $proj_folder/scripts/count_lineages_states.R "$(dirname $gisaid_file)/DE.metadata.tsv" $time $output_folder "true" $alias $lineage_dates
 
 echo "STARTING ./SDPlots_lineages.sh - 5"
 date
