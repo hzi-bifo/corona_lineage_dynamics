@@ -13,3 +13,8 @@ dependencies:
   - r-mass
   - r-matrix
   - pkg-config
+  - zlib
+  - r-xml2
+  - r-systemfonts
+  - r-ragg
+  - r-pkgdown
