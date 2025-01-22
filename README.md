@@ -9,7 +9,7 @@ We tested the installation on Ubuntu 23.10 and conda 24.3.0.
 ## Installation (approx. 20 min)
 To fetch the repository run:
 ```shell
-git clone git@github.com:hzi-bifo/corona_lineage_dynamics.git
+git clone https://github.com/hzi-bifo/corona_lineage_dynamics.git
 cd corona_lineage_dynamics
 ```
 
