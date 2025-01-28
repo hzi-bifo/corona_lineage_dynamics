@@ -6,9 +6,9 @@ This repository contains scripts to calculate frequences of pangolin lineages ba
 This README file is designed for linux system with installed conda. 
 We tested the installation on Ubuntu 23.10 and conda 24.3.0. 
 
-Here we present two options for installing and working with corona_lineage_dynamics. First option is the conda installation, second option is to use the singularity container.
+Here we present three options for installing and working with corona_lineage_dynamics. First option is the installation from source, second option is installation or bioconda package, and the third option is to use our singularity container.
 
-# Conda installation
+# Installation from source
 ## Installation (approx. 20 min)
 To fetch the repository run:
 ```shell
@@ -62,6 +62,44 @@ Note that if the folder already exists, it would be better to erase its contents
 To analyse the test data, run:
 ```shell
 bash SDPlots_lineages_local.sh testdata/metadata.tsv testdata/months.txt outputs 0.1
+```
+
+If everything goes well, the pipeline will print several lines of log. The last line should be
+```
+ENDING ./SDPlots_lineages.sh
+```
+Also, besides the files inside the `outputs` folder, the pipeline should create the following files.
+```
+DE_continuous.interactive.html
+DE_BB_continuous.interactive.html
+DE_corrected.interactive.html
+DE_BB_corrected.interactive.html
+DE.interactive.html
+DE_BB.interactive.html
+DE_BE_continuous.interactive.html
+JP_continuous.interactive.html
+DE_BE_corrected.interactive.html
+JP_corrected.interactive.html
+DE_BE.interactive.html
+JP.interactive.html
+```
+
+# Bioconda package installation (under review)
+You can install this pipeline through installing its bioconda package. For that, run the following command:
+```
+conda install -c bioconda corona_lineage_dynamics
+```
+This will install the package. Then, we can get the sample data:
+```
+mkdir -p testdata/ output/
+wget https://github.com/hzi-bifo/corona_lineage_dynamics/raw/refs/heads/main/testdata/aliases.tsv -O testdata/aliases.tsv
+wget https://github.com/hzi-bifo/corona_lineage_dynamics/raw/refs/heads/main/testdata/metadata.tsv -O testdata/metadata.tsv
+wget https://github.com/hzi-bifo/corona_lineage_dynamics/raw/refs/heads/main/testdata/months.txt -O testdata/months.txt
+```
+
+And run the package
+```
+corona_lineage_dynamics testdata/metadata.tsv testdata/months.txt output 0.1
 ```
 
 If everything goes well, the pipeline will print several lines of log. The last line should be
