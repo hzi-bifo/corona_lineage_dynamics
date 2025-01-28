@@ -1,4 +1,9 @@
-#!/bin/bash -x
+#!/bin/bash
+
+if [ "$#" -ne 4 ]; then
+	echo "Usage: $0 <gisaid_file> <months_file> <output_folder> <threshold>"
+	exit 1
+fi
 
 echo "STARTING ./SDPlots_lineages.sh - 1"
 date
@@ -8,6 +13,7 @@ time=$2
 output_folder=$3
 threshold=$4
 
+set -x
 
 # stop execution if an error occurs
 set -e

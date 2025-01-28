@@ -915,10 +915,10 @@ int main(int argc, char* argv[]) {
   // }
   // cerr << endl;
 
-  // if (argc < 7) {
-  //     std::cerr << "Usage: " << argv[0] << " file months_file output_folder corrected alias_file lineage_date_file\n";
-  //     return 1;
-  // }
+  if (argc != 7) {
+      std::cerr << "Usage: " << argv[0] << " gisaid_file months_file output_folder corrected alias_file lineage_date_file\n";
+      return 1;
+  }
 
   std::string file(argv[1]);
   std::string months_file(argv[2]);

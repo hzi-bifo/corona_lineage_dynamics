@@ -1,3 +1,4 @@
 scripts/count_lineages_country
 outputs/
 .vscode/
+lib/
