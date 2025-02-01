@@ -1,5 +1,12 @@
 #!/bin/bash
 
+if [ "$#" -eq 1 ]; then
+	if [[ "$1" != "-h" ]] || [[ "$1" != "--help" ]]; then
+		echo "Usage: $0 <gisaid_file> <months_file> <output_folder> <threshold>"
+		exit 0
+	fi
+fi
+
 if [ "$#" -ne 4 ]; then
 	echo "Usage: $0 <gisaid_file> <months_file> <output_folder> <threshold>"
 	exit 1

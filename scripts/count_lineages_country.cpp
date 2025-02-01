@@ -9,6 +9,7 @@
 #include <set>
 #include <filesystem>
 #include <boost/regex.hpp>
+#include <sstream>
 // #include <Rcpp.h>
 
 //#include <boost/program_options.hpp>
@@ -915,7 +916,14 @@ int main(int argc, char* argv[]) {
   // }
   // cerr << endl;
 
+
+  if (argc == 2 && (argv[1] == std::string("-h") || argv[1] == std::string("--help"))) {
+      std::cerr << "Usage: " << argv[0] << " gisaid_file months_file output_folder corrected alias_file lineage_date_file\n";
+      return 0;
+  }
+
   if (argc != 7) {
+      // std::cerr << argc << endl;
       std::cerr << "Usage: " << argv[0] << " gisaid_file months_file output_folder corrected alias_file lineage_date_file\n";
       return 1;
   }
