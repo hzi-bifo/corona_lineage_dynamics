@@ -5,16 +5,39 @@ channels:
 dependencies:
   - boost
   - boost-cpp
-  - c-compiler
   - curl
-  - cxx-compiler
-  - make
-  - r-base
+  - make 
+  - pkg-config 
+  - r-base 
+  - r-binom
+  - r-countrycode
+  - r-d3heatmap
+  - r-devtools
+  - r-doparallel
+  - r-dplyr
+  - r-foreach
+  - r-htmltools
+  - r-htmlwidgets
+  - r-knitr
+  - r-lifecycle
   - r-mass
   - r-matrix
-  - pkg-config
-  - zlib
-  - r-xml2
-  - r-systemfonts
+  - r-pkgdown 
+  - r-plotly
+  - r-plyr
   - r-ragg
-  - r-pkgdown
+  - r-rcpp
+  - r-rcurl
+  - r-readr
+  - r-scales
+  - r-stringr
+  - r-systemfonts 
+  - r-tictoc
+  - r-tidyr
+  - r-withr
+  - r-xml
+  - r-xml2 
+  - r-xtable
+  - zlib 
+  - cxx-compiler
+  - c-compiler
