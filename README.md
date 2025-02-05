@@ -6,7 +6,7 @@ This repository contains scripts to calculate frequences of pangolin lineages ba
 This README file is designed for linux system with installed conda. 
 We tested the installation on Ubuntu 23.10 and conda 24.3.0. 
 
-Here we present three options for installing and working with corona_lineage_dynamics. First option is the installation from source, second option is installation or bioconda package, and the third option is to use our singularity container.
+Here we present three options for installing and working with corona_lineage_dynamics: 1) installing from source, 2) installing bioconda package, and 3) singularity container.
 
 # Installation from source
 ## Installation (approx. 20 min)
@@ -84,10 +84,10 @@ DE_BE.interactive.html
 JP.interactive.html
 ```
 
-# Bioconda package installation (under review)
+# Bioconda package installation
 You can install this pipeline through installing its bioconda package. For that, run the following command:
 ```
-conda install -c bioconda corona_lineage_dynamics
+conda install bioconda::corona_lineage_dynamics
 ```
 This will install the package. Then, we can get the sample data:
 ```
