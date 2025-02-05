@@ -28,17 +28,6 @@ Then, we compile the C++ codes.
 make
 ```
 
-Some packages are required by R for the pipeline. These could be installed with the following command (this could take several minutes).
-```
-Rscript -e 'install.packages(c("XML", "binom", "plotly", "htmlwidgets", "countrycode", "doParallel",
-  "dplyr", "foreach", "htmltools", "plyr", "Rcpp", "RCurl", "readr", "stringr", "tictoc", "tidyr",
-  "xtable"), repos="https://cloud.r-project.org");
-  if (!require("devtools")) install.packages("devtools",
-    repos="https://cloud.r-project.org");
-    devtools::install_github("rstudio/d3heatmap");'
-```
-
-
 ## Run the pipeline 
 To run this software, run the following:
 ```shell
