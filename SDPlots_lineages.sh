@@ -23,7 +23,7 @@ proj_folder=.
 
 mkdir -p $output_folder
 
-make
+# make
 
 # get current alias list and lineage dates
 alias=$output_folder"/aliases.tsv"
