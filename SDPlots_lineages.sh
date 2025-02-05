@@ -33,6 +33,8 @@ Rscript $proj_folder/scripts/get_alias_list.R $alias $lineage_dates
 
 echo "STARTING ./SDPlots_lineages.sh - 2"
 date
+
+export LD_LIBRARY_PATH=$CONDA_PREFIX/lib:$LD_LIBRARY_PATH
 # count lineages for countries based on Gisaid metadata file
 # uncorrected counts
 #Rscript scripts/count_lineages_country.R $gisaid_file $time $output_folder "false" $alias $lineage_dates
