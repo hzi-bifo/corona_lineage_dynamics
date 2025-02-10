@@ -7,7 +7,7 @@ library("stringr")
 library("readr")
 suppressWarnings(suppressMessages(library("dplyr")))
 if (!require("tictoc")) {
-  install.packages("tictoc")
+  install.packages("tictoc", dependencies = TRUE)
 }
 
 library("tictoc")
