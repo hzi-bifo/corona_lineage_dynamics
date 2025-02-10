@@ -86,7 +86,8 @@ plot <- ggplot(df_test, aes(x = Month, group = 1)) + theme_bw(base_size = 15) + 
 
 # add lines
 for (i in 1:length(d.names)){
-  plot <- plot + geom_line(aes_string(y = toString(d.names[i])), col = colVec[i], size = lwdVec[i])
+#  plot <- plot + geom_line(aes_string(y = toString(d.names[i])), col = colVec[i], size = lwdVec[i])
+  plot <- plot + geom_line(aes(y = .data[[as.character(d.names[i])]]), col = colVec[i], linewidth = lwdVec[i])
 }
 
 # optionally: add error bars
