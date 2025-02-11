@@ -1,7 +1,6 @@
 name: corona_lineage_dynamics
 channels:
   - conda-forge
-  - defaults
 dependencies:
   - boost
   - boost-cpp
