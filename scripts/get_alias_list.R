@@ -8,7 +8,6 @@ args = commandArgs(trailingOnly=TRUE)
 output_alias <- args[1]
 output_dates <- args[2]
 
-lineage_information_backup_file = "testdata/lineage_list.html"
 
 parse_html <- function(lineage_html) {
     lineage_list <- readHTMLTable(lineage_html, stringsAsFactors = FALSE)[[1]]
@@ -41,8 +40,16 @@ tryCatch(
     error=function(err.msg) {
         message(toString(err.msg))
         message("Please make sure of your network connection. Please check if you can access 'https://cov-lineages.org/lineage_list.html'.")
+        
+        message(paste0("Since there are network problems, we try to use an other version of this file. Please don't forget to update this file."))
+        # lineage_information_backup_file = "testdata/lineage_list.html"
+        if (length(args) < 3) {
+            stop(paste("Since I received a network problem, I will try to load a local file, but you need to provide me the actual file address.") )
+
+        }
+        lineage_information_backup_file = args[3]
+
         # message("Please make sure of your network connection. Please check if you can access 'https://github.com/cov-lineages/pango-designation/raw/refs/heads/master/lineage_notes.txt'.")
-        message("Since there are network problems, we will use an other version of this file in 'testdata/lineage_list.html'. Please don't forget to update this file.")
         if (!file.exists(lineage_information_backup_file)) {
             stop(paste("File", lineage_information_backup_file, "does not exists. Please download 'https://cov-lineages.org/lineage_list.html' and move it here. Please finally make sure that the file located there correctly.") )
         }

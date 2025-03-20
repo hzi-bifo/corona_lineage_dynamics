@@ -38,7 +38,7 @@ mkdir -p $output_folder
 # get current alias list and lineage dates
 alias=$output_folder"/aliases.tsv"
 lineage_dates=$output_folder"/lineage_dates.tsv"
-Rscript $proj_folder/scripts/get_alias_list.R $alias $lineage_dates
+Rscript $proj_folder/scripts/get_alias_list.R $alias $lineage_dates testdata/lineage_list.html
 
 
 echo "STARTING ./SDPlots_lineages.sh - 2"
