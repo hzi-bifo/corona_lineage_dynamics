@@ -57,6 +57,22 @@ If everything goes well, the pipeline will print several lines of log. The last 
 ```
 ENDING ./SDPlots_lineages.sh
 ```
+Note that if you receive any error related to the network problem, please try to fix your network problem and make sure you can access this like inside your network. Some potential network errors could be
+```
+Error in function (type, msg, asError = TRUE)  : 
+  Failed to connect to cov-lineages.org port 443 after 129736 ms: Could not connect to server
+Calls: getURL -> curlPerform -> <Anonymous> -> fun
+Execution halted
+```
+Or
+```
+Error in function (type, msg, asError = TRUE)  : 
+  Could not resolve host: cov-lineages.org
+Calls: getURL -> curlPerform -> <Anonymous> -> fun
+Execution halted
+```
+If the pipeline encounter these errors, it will automatically switch to a version of the code inside the repository. Note that in this case, the data could not be up-to-date. Fixing the network connection will fix this issue.
+
 Also, besides the files inside the `outputs` folder, the pipeline should create the following files.
 ```
 DE_continuous.interactive.html
