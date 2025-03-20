@@ -1,0 +1,1501 @@
+<!DOCTYPE html>
+<html lang="en-US">
+  <head>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta charset="utf-8">
+    <title>Cov-Lineages</title>
+    <link rel="icon" href="https://cov-lineages.org/assets/images/favicon.png">
+    <link rel="stylesheet" href="/assets/css/main.css">
+    <link rel="stylesheet" href="/assets/css/dripicons.css">
+
+    <link rel="preconnect" href="https://fonts.gstatic.com">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;700&display=swap" rel="stylesheet"> 
+
+  </head>
+  <body>
+    <ul class="nav justify-content-center" id="main_nav">
+  <li class="nav-item">
+    <a class="navbar-brand" href="https://cov-lineages.org/index.html">cov-lineages.org</a>
+  </li>
+  <li class="nav-item dropdown">
+    <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+      Pango
+    </a>
+    <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+      <a class="dropdown-item" href="https://cov-lineages.org/index.html#about">About</a>
+      <a class="dropdown-item" href="https://cov-lineages.org/FAQ.html">FAQs</a>
+      <a class="dropdown-item" href="https://www.pango.network/how-does-the-system-work/how-to-suggest-a-new-lineage/">Suggest a New Lineage</a>
+      <a class="dropdown-item" href="https://cov-lineages.org/index.html#cite">How to Cite/Publications</a>
+      <a class="dropdown-item" href="https://cov-lineages.org/index.html#contributors">Contributors</a>
+      <a class="dropdown-item" href="https://cov-lineages.org/index.html#contact">Contact Us</a>
+    </div>
+  </li>
+  <li class="nav-item">
+    <a class="nav-link" href="https://cov-lineages.org/lineage_list.html">Lineages</a>
+  </li>
+  <li class="nav-item">
+    <a class="nav-link" href="https://cov-lineages.org/resources.html">Resources</a>
+  </li>
+  <li class="nav-item">
+    <a class="nav-link" href="https://cov-lineages.org/constellations.html">Constellations</a>
+  </li>
+  <li class="nav-item">
+    <a class="nav-link" href="https://cov-lineages.org/index.html#global_reports">VOC Reports</a>
+  </li>
+
+  <!--<li class="nav-item dropdown">
+    <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+      VOC Reports
+    </a>
+    <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+      
+        <a class="dropdown-item" href="/global_report_B.1.1.7.html">B.1.1.7</a>
+      
+        <a class="dropdown-item" href="/global_report_B.1.351.html">B.1.351</a>
+      
+        <a class="dropdown-item" href="/global_report_P.1.html">P.1</a>
+      
+        <a class="dropdown-item" href="/global_report_B.1.617.2.html">B.1.617.2</a>
+      
+        <a class="dropdown-item" href="/global_report_B.1.1.529.html">B.1.1.529</a>
+       
+    </div>
+  </li>-->
+</ul>
+
+
+
+<ul class="p-nested-dropdowns" id="mobile_menu">
+    <li class="nested-dropdown">
+        <div id="mobile_menu_btn">Menu</div>
+        <!-- First level sub dropdown -->
+        <ul>
+            <li><a class="nested-nav-item" href="https://cov-lineages.org/index.html">Home</a></li>
+            <li>
+               <div class="nested-nav-item">Pango</div>
+                <ul>
+                    <li><a class="nested-nav-item" href="https://cov-lineages.org/index.html#about">About</a></li>
+                    <li><a class="nested-nav-item" href="https://cov-lineages.org/FAQ.html">FAQs</a></li>
+                    <li><a class="nested-nav-item" href="https://www.pango.network/how-does-the-system-work/how-to-suggest-a-new-lineage/">Suggest a New Lineage</a></li>
+                    <li><a class="nested-nav-item" href="https://cov-lineages.org/index.html#cite">How to Cite/Publications</a></li>
+                    <li><a class="nested-nav-item" href="https://cov-lineages.org/index.html#contributors">Contributors</a></li>
+                    <li><a class="nested-nav-item" href="https://cov-lineages.org/index.html#contact">Contact Us</a></li>
+                </ul>
+            </li>
+            <li><a class="nested-nav-item" href="https://cov-lineages.org/lineage_list.html">Lineages</a></li>
+            <li><a class="nested-nav-item" href="https://cov-lineages.org/resources.html">Resources</a></li>
+            <li><a class="nested-nav-item" href="https://cov-lineages.org/constellations.html">Constellations</a></li>
+            <li><a class="nested-nav-item" href="https://cov-lineages.org/index.html#global_reports">VOC Reports</a></li>
+        </ul>
+    </li>
+</ul>
+
+
+
+    <div id="content_wrapper" class="container"><head>
+<script src="https://code.jquery.com/jquery-1.12.4.min.js" integrity="sha384-nvAa0+6Qg9clwYCGGPpDQLVpLNn0fRaROjHqs13t4Ggj3Ez50XnGQqc/r8MhnRDZ" crossorigin="anonymous"></script>
+  <script src="https://d3js.org/d3.v3.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/d3-geo-projection/0.2.14/d3.geo.projection.js"></script>
+</head>
+
+
+
+
+
+
+  <header class="main">
+		<h1>Lineage List</h1>
+                <p>This is a list of active lineages which have been seen in the last year. A complete list of lineages can be found on <a href="https://github.com/cov-lineages/pango-designation">the Pango designation GitHub</a> and a JSON file containing the equivalent data from this page for the full set of lineages can be downloaded in JSON format <a href="https://github.com/cov-lineages/lineages-website/blob/master/_data/lineage_data.full.json">here</a>.</p>    
+
+    
+	</header>
+
+  <div id="tableWrapper">
+      <br>
+      <div class="input-group input-group-sm mb-3 searchbar-group">
+  <div class="input-group-prepend">
+      <select class="custom-select searchSelect">
+        <option value="All Fields" selected="selected">All Fields</option>
+        <option value="Lineage">Lineage</option>
+      </select>
+  </div>
+  <input class="searchbar" type="text" id="myInput" onkeyup="search(this)" placeholder="Search for lineage..." title="searchbar">
+</div>
+
+  <table id="myTable" class="table">
+    <thead class="thead-light">
+      <tr>
+        <th scope="col">Lineage</th>
+        <th scope="col">Most common countries</th>
+        <th scope="col">Earliest date</th>
+        <th scope="col"># designated</th>
+        <th scope="col"># assigned</th>
+        <th class="desc-td" scope="col">Description</th>
+        <th class="desc-td" scope="col">WHO Name</th>
+      </tr>
+    </thead>
+      
+
+      
+
+      
+    <tr>
+      
+      <td><a href="./lineage.html?lineage=B">B</a> </td>
+      
+      <td>United States of America 40.0%, United Kingdom 15.0%, China 8.0%, Mexico 5.0%, Germany 3.0%</td>
+      <td>2019-12-24</td>
+      <td>3999</td>
+      <td>10439</td>
+      <td class="desc-td" >One of the two original haplotypes of the pandemic(and first to be discovered)</td>
+      <div id="who_wrapper"><td id="who_B"></td></div>
+
+    </tr>
+      
+
+      
+
+      
+    <tr>
+      
+      <td><a href="./lineage.html?lineage=B.1">B.1</a> </td>
+      
+      <td>United States of America 47.0%, Turkey 11.0%, United Kingdom 7.0%, Canada 4.0%, France 3.0%</td>
+      <td>2020-01-01</td>
+      <td>46223</td>
+      <td>115411</td>
+      <td class="desc-td" >A large European lineage the origin of which roughly corresponds to the Northern Italian outbreak early in 2020.</td>
+      <div id="who_wrapper"><td id="who_B.1"></td></div>
+
+    </tr>
+      
+
+      
+
+      
+    <tr>
+      
+      <td><a href="./lineage.html?lineage=B.1.1">B.1.1</a> </td>
+      
+      <td>United Kingdom 25.0%, United States of America 15.0%, Russia 6.0%, Japan 6.0%, Turkey 5.0%</td>
+      <td>2020-01-19</td>
+      <td>22778</td>
+      <td>51787</td>
+      <td class="desc-td" >European lineage with 3 clear SNPs `28881GA`,`28882GA`,`28883GC`</td>
+      <div id="who_wrapper"><td id="who_B.1.1"></td></div>
+
+    </tr>
+      
+
+      
+
+      
+    <tr>
+      
+      <td><a href="./lineage.html?lineage=B.1.1.7">B.1.1.7</a> </td>
+      
+      <td>United Kingdom 23.0%, United States of America 20.0%, Germany 9.0%, Sweden 6.0%, Denmark 6.0%</td>
+      <td>2020-01-19</td>
+      <td>69634</td>
+      <td>1118968</td>
+      <td class="desc-td" >UK lineage of concern, associated with the N501Y mutation. More information can be found at cov-lineages.org/global_report.html</td>
+      <div id="who_wrapper"><td id="who_B.1.1.7"></td></div>
+
+    </tr>
+      
+
+      
+
+      
+    <tr>
+      
+      <td><a href="./lineage.html?lineage=B.1.1.28">B.1.1.28</a> </td>
+      
+      <td>Brazil 83.0%, Philippines 8.0%, United States of America 3.0%, Paraguay 2.0%, Japan 1.0%</td>
+      <td>2020-02-10</td>
+      <td>854</td>
+      <td>5631</td>
+      <td class="desc-td" >Brazil mostly, absorbed B.1.1.94 and B.1.1.143</td>
+      <div id="who_wrapper"><td id="who_B.1.1.28"></td></div>
+
+    </tr>
+      
+
+      
+
+      
+    <tr>
+      
+      <td><a href="./lineage.html?lineage=P.1">P.1</a> </td>
+      
+      <td>Brazil 58.0%, United States of America 25.0%, Chile 3.0%, Argentina 1.0%, Spain 1.0%</td>
+      <td>2020-04-07</td>
+      <td>29942</td>
+      <td>73870</td>
+      <td class="desc-td" >Alias of B.1.1.28.1, Brazilian lineage with a number of spike mutations with likely functional significance E484K, K417T, and N501Y. Described in https://virological.org/t/genomic-characterisation-of-an-emergent-sars-cov-2-lineage-in-manaus-preliminary-findings/586, from #77</td>
+      <div id="who_wrapper"><td id="who_P.1"></td></div>
+
+    </tr>
+      
+
+      
+
+      
+    <tr>
+      
+      <td><a href="./lineage.html?lineage=B.1.1.142">B.1.1.142</a> </td>
+      
+      <td>United Kingdom 50.0%, Australia 8.0%, Germany 7.0%, United States of America 6.0%, Austria 5.0%</td>
+      <td>2020-02-24</td>
+      <td>38</td>
+      <td>249</td>
+      <td class="desc-td" >Australian lineage</td>
+      <div id="who_wrapper"><td id="who_B.1.1.142"></td></div>
+
+    </tr>
+      
+
+      
+
+      
+    <tr>
+      
+      <td><a href="./lineage.html?lineage=B.1.1.529">B.1.1.529</a> </td>
+      
+      <td>United States of America 34.0%, Germany 13.0%, India 9.0%, Turkey 5.0%, Russia 5.0%</td>
+      <td>2020-04-14</td>
+      <td>0</td>
+      <td>7730</td>
+      <td class="desc-td" >South Africa and Botswana lineage, from #343</td>
+      <div id="who_wrapper"><td id="who_B.1.1.529"></td></div>
+
+    </tr>
+      
+
+      
+
+      
+    <tr>
+      
+      <td><a href="./lineage.html?lineage=BA.1">BA.1</a> </td>
+      
+      <td>United Kingdom 40.0%, United States of America 22.0%, Denmark 6.0%, Germany 4.0%, Brazil 4.0%</td>
+      <td>2020-06-25</td>
+      <td>65813</td>
+      <td>426716</td>
+      <td class="desc-td" >Alias of B.1.1.529.1, from #361</td>
+      <div id="who_wrapper"><td id="who_BA.1"></td></div>
+
+    </tr>
+      
+
+      
+
+      
+    <tr>
+      
+      <td><a href="./lineage.html?lineage=BA.1.1">BA.1.1</a> </td>
+      
+      <td>United States of America 47.0%, United Kingdom 19.0%, Germany 7.0%, Canada 4.0%, France 2.0%</td>
+      <td>2020-01-27</td>
+      <td>104388</td>
+      <td>973060</td>
+      <td class="desc-td" >Alias of B.1.1.529.1.1, from #360</td>
+      <div id="who_wrapper"><td id="who_BA.1.1"></td></div>
+
+    </tr>
+      
+
+      
+
+      
+    <tr>
+      
+      <td><a href="./lineage.html?lineage=BA.2">BA.2</a> </td>
+      
+      <td>United Kingdom 29.0%, Germany 13.0%, Denmark 12.0%, United States of America 11.0%, France 7.0%</td>
+      <td>2020-03-28</td>
+      <td>112178</td>
+      <td>1209386</td>
+      <td class="desc-td" >Alias of B.1.1.529.2, from #361</td>
+      <div id="who_wrapper"><td id="who_BA.2"></td></div>
+
+    </tr>
+      
+
+      
+
+      
+    <tr>
+      
+      <td><a href="./lineage.html?lineage=BA.2.12.1">BA.2.12.1</a> </td>
+      
+      <td>United States of America 81.0%, Canada 5.0%, United Kingdom 2.0%, Germany 1.0%, Mexico 1.0%</td>
+      <td>2020-04-15</td>
+      <td>39743</td>
+      <td>276706</td>
+      <td class="desc-td" >Alias of B.1.1.529.2.12.1, USA and Canada lineage, from #499</td>
+      <div id="who_wrapper"><td id="who_BA.2.12.1"></td></div>
+
+    </tr>
+      
+
+      
+
+      
+    <tr>
+      
+      <td><a href="./lineage.html?lineage=BM.4.1.1">BM.4.1.1</a> </td>
+      
+      <td>United States of America 24.0%, India 22.0%, United Kingdom 11.0%, Australia 5.0%, Singapore 4.0%</td>
+      <td>2022-07-20</td>
+      <td>35</td>
+      <td>928</td>
+      <td class="desc-td" >Alias of B.1.1.529.2.75.3.4.1.1, mainly found in India, defined by S:346T</td>
+      <div id="who_wrapper"><td id="who_BM.4.1.1"></td></div>
+
+    </tr>
+      
+
+      
+
+      
+    <tr>
+      
+      <td><a href="./lineage.html?lineage=DV.7.1">DV.7.1</a> </td>
+      
+      <td>Spain 49.0%, United States of America 9.0%, France 7.0%, Canada 5.0%, United Kingdom 5.0%</td>
+      <td>2023-05-11</td>
+      <td>45</td>
+      <td>1264</td>
+      <td class="desc-td" >Alias of B.1.1.529.2.75.3.4.1.1.1.1.1.7.1, S:L455F (G22927T), S:F456L (T22928C), Spain/Austria, from sars-cov-2-variants/lineage-proposals#135</td>
+      <div id="who_wrapper"><td id="who_DV.7.1"></td></div>
+
+    </tr>
+      
+
+      
+
+      
+    <tr>
+      
+      <td><a href="./lineage.html?lineage=BN.1.2">BN.1.2</a> </td>
+      
+      <td>South_Korea 28.0%, Japan 23.0%, United States of America 7.0%, Thailand 6.0%, Denmark 5.0%</td>
+      <td>2022-01-24</td>
+      <td>2344</td>
+      <td>9559</td>
+      <td class="desc-td" >Alias of B.1.1.529.2.75.5.1.2, Singapore/England, E:D72G</td>
+      <div id="who_wrapper"><td id="who_BN.1.2"></td></div>
+
+    </tr>
+      
+
+      
+
+      
+    <tr>
+      
+      <td><a href="./lineage.html?lineage=BA.2.86">BA.2.86</a> </td>
+      
+      <td>South_Africa 34.0%, United States of America 10.0%, Australia 5.0%, Netherlands 5.0%, Germany 4.0%</td>
+      <td>2023-03-11</td>
+      <td>28</td>
+      <td>922</td>
+      <td class="desc-td" >Alias of B.1.1.529.2.86, from #2183</td>
+      <div id="who_wrapper"><td id="who_BA.2.86"></td></div>
+
+    </tr>
+      
+
+      
+
+      
+    <tr>
+      
+      <td><a href="./lineage.html?lineage=BA.2.86.1">BA.2.86.1</a> </td>
+      
+      <td>Japan 20.0%, United Kingdom 11.0%, United States of America 9.0%, Denmark 8.0%, France 6.0%</td>
+      <td>2023-01-03</td>
+      <td>22</td>
+      <td>9872</td>
+      <td class="desc-td" >Alias of B.1.1.529.2.86.1, ORF1a:K1973R, mostly with C12815T, mainly Europe, from #2236</td>
+      <div id="who_wrapper"><td id="who_BA.2.86.1"></td></div>
+
+    </tr>
+      
+
+      
+
+      
+    <tr>
+      
+      <td><a href="./lineage.html?lineage=JN.1">JN.1</a> </td>
+      
+      <td>United States of America 32.0%, Canada 8.0%, United Kingdom 8.0%, Spain 6.0%, China 4.0%</td>
+      <td>2020-01-20</td>
+      <td>3987</td>
+      <td>102966</td>
+      <td class="desc-td" >Alias of B.1.1.529.2.86.1.1, S:L455S, ORF1a:R3821K, ORF7b:F19L, Europe</td>
+      <div id="who_wrapper"><td id="who_JN.1"></td></div>
+
+    </tr>
+      
+
+      
+
+      
+    <tr>
+      
+      <td><a href="./lineage.html?lineage=JN.1.1">JN.1.1</a> </td>
+      
+      <td>United States of America 21.0%, France 17.0%, China 10.0%, Canada 6.0%, United Kingdom 4.0%</td>
+      <td>2021-07-16</td>
+      <td>692</td>
+      <td>22674</td>
+      <td class="desc-td" >Alias of B.1.1.529.2.86.1.1.1, ORF1a:F499L, C11747T, France, from sars-cov-2-variants/lineage-proposals#987</td>
+      <div id="who_wrapper"><td id="who_JN.1.1"></td></div>
+
+    </tr>
+      
+
+      
+
+      
+    <tr>
+      
+      <td><a href="./lineage.html?lineage=JN.1.1.1">JN.1.1.1</a> </td>
+      
+      <td>Sweden 29.0%, France 16.0%, United Kingdom 10.0%, United States of America 8.0%, Italy 6.0%</td>
+      <td>2023-09-25</td>
+      <td>24</td>
+      <td>588</td>
+      <td class="desc-td" >Alias of B.1.1.529.2.86.1.1.1.1, S:T572I on C9142T branch, France/Sweden/Poland, from sars-cov-2-variants/lineage-proposals#1097</td>
+      <div id="who_wrapper"><td id="who_JN.1.1.1"></td></div>
+
+    </tr>
+      
+
+      
+
+      
+    <tr>
+      
+      <td><a href="./lineage.html?lineage=JN.1.1.3">JN.1.1.3</a> </td>
+      
+      <td>Japan 23.0%, Sweden 20.0%, United Kingdom 14.0%, France 13.0%, United States of America 8.0%</td>
+      <td>2023-11-04</td>
+      <td>68</td>
+      <td>71</td>
+      <td class="desc-td" >Alias of B.1.1.529.2.86.1.1.1.3, S:R346T, from sars-cov-2-variants/lineage-proposals#1089</td>
+      <div id="who_wrapper"><td id="who_JN.1.1.3"></td></div>
+
+    </tr>
+      
+
+      
+
+      
+    <tr>
+      
+      <td><a href="./lineage.html?lineage=JN.1.1.5">JN.1.1.5</a> </td>
+      
+      <td>Brazil 27.0%, United States of America 26.0%, Japan 8.0%, France 7.0%, South_Africa 4.0%</td>
+      <td>2023-01-29</td>
+      <td>43</td>
+      <td>407</td>
+      <td class="desc-td" >Alias of B.1.1.529.2.86.1.1.1.5, S:R346T on C9142T branch, from #2492</td>
+      <div id="who_wrapper"><td id="who_JN.1.1.5"></td></div>
+
+    </tr>
+      
+
+      
+
+      
+    <tr>
+      
+      <td><a href="./lineage.html?lineage=KR.1">KR.1</a> </td>
+      
+      <td>United States of America 43.0%, Canada 21.0%, South_Korea 7.0%, Japan 6.0%, Australia 4.0%</td>
+      <td>2024-01-06</td>
+      <td>10</td>
+      <td>672</td>
+      <td class="desc-td" >Alias of B.1.1.529.2.86.1.1.1.5.1, S:F456L (22928C), after C28498T, from sars-cov-2-variants/lineage-proposals#1253</td>
+      <div id="who_wrapper"><td id="who_KR.1"></td></div>
+
+    </tr>
+      
+
+      
+
+      
+    <tr>
+      
+      <td><a href="./lineage.html?lineage=JN.1.2">JN.1.2</a> </td>
+      
+      <td>United States of America 47.0%, Canada 37.0%, Greece 4.0%, United Kingdom 3.0%, Sweden 1.0%</td>
+      <td>2023-01-03</td>
+      <td>43</td>
+      <td>2421</td>
+      <td class="desc-td" >Alias of B.1.1.529.2.86.1.1.2, S:M1229I, USA/Canada, from sars-cov-2-variants/lineage-proposals#1087</td>
+      <div id="who_wrapper"><td id="who_JN.1.2"></td></div>
+
+    </tr>
+      
+
+      
+
+      
+    <tr>
+      
+      <td><a href="./lineage.html?lineage=JN.1.3">JN.1.3</a> </td>
+      
+      <td>United States of America 29.0%, Netherlands 9.0%, Switzerland 7.0%, Canada 6.0%, United Kingdom 5.0%</td>
+      <td>2023-03-04</td>
+      <td>23</td>
+      <td>456</td>
+      <td class="desc-td" >Alias of B.1.1.529.2.86.1.1.3, ORF8:Q18*, Netherlands</td>
+      <div id="who_wrapper"><td id="who_JN.1.3"></td></div>
+
+    </tr>
+      
+
+      
+
+      
+    <tr>
+      
+      <td><a href="./lineage.html?lineage=JN.1.4">JN.1.4</a> </td>
+      
+      <td>United States of America 44.0%, Canada 8.0%, South_Korea 7.0%, United Kingdom 5.0%, Denmark 4.0%</td>
+      <td>2023-02-14</td>
+      <td>129</td>
+      <td>45080</td>
+      <td class="desc-td" >Alias of B.1.1.529.2.86.1.1.4, ORF1a:T170I, Denmark/Singapore, from #2381</td>
+      <div id="who_wrapper"><td id="who_JN.1.4"></td></div>
+
+    </tr>
+      
+
+      
+
+      
+    <tr>
+      
+      <td><a href="./lineage.html?lineage=JN.1.4.2">JN.1.4.2</a> </td>
+      
+      <td>United States of America 84.0%, South_Korea 4.0%, Canada 3.0%, Puerto_Rico 2.0%, United Kingdom 1.0%</td>
+      <td>2023-11-17</td>
+      <td>387</td>
+      <td>1246</td>
+      <td class="desc-td" >Alias of B.1.1.529.2.86.1.1.4.2, S:N185D, after T18453C, USA, from #2462</td>
+      <div id="who_wrapper"><td id="who_JN.1.4.2"></td></div>
+
+    </tr>
+      
+
+      
+
+      
+    <tr>
+      
+      <td><a href="./lineage.html?lineage=JN.1.4.3">JN.1.4.3</a> </td>
+      
+      <td>United States of America 64.0%, Canada 9.0%, United Kingdom 8.0%, China 4.0%, Australia 2.0%</td>
+      <td>2023-11-14</td>
+      <td>36</td>
+      <td>400</td>
+      <td class="desc-td" >Alias of B.1.1.529.2.86.1.1.4.3, S:T572I, USA, from #2487</td>
+      <div id="who_wrapper"><td id="who_JN.1.4.3"></td></div>
+
+    </tr>
+      
+
+      
+
+      
+    <tr>
+      
+      <td><a href="./lineage.html?lineage=KQ.1">KQ.1</a> </td>
+      
+      <td>United States of America 86.0%, Canada 6.0%, United Kingdom 4.0%, Puerto_Rico 1.0%, Poland 1.0%</td>
+      <td>2024-01-04</td>
+      <td>64</td>
+      <td>872</td>
+      <td class="desc-td" >Alias of B.1.1.529.2.86.1.1.4.3.1, S:R346T, USA from #2487</td>
+      <div id="who_wrapper"><td id="who_KQ.1"></td></div>
+
+    </tr>
+      
+
+      
+
+      
+    <tr>
+      
+      <td><a href="./lineage.html?lineage=JN.1.5">JN.1.5</a> </td>
+      
+      <td>Singapore 26.0%, China 16.0%, Japan 10.0%, South_Korea 10.0%, United States of America 9.0%</td>
+      <td>2023-10-30</td>
+      <td>539</td>
+      <td>2935</td>
+      <td class="desc-td" >Alias of B.1.1.529.2.86.1.1.5, ORF1b:V1271T, Singapore/Malaysia/Indonesia, from #2419</td>
+      <div id="who_wrapper"><td id="who_JN.1.5"></td></div>
+
+    </tr>
+      
+
+      
+
+      
+    <tr>
+      
+      <td><a href="./lineage.html?lineage=JN.1.6">JN.1.6</a> </td>
+      
+      <td>United States of America 57.0%, Switzerland 6.0%, France 5.0%, Canada 5.0%, China 5.0%</td>
+      <td>2023-10-11</td>
+      <td>141</td>
+      <td>1224</td>
+      <td class="desc-td" >Alias of B.1.1.529.2.86.1.1.6, G22627A</td>
+      <div id="who_wrapper"><td id="who_JN.1.6"></td></div>
+
+    </tr>
+      
+
+      
+
+      
+    <tr>
+      
+      <td><a href="./lineage.html?lineage=JN.1.6.1">JN.1.6.1</a> </td>
+      
+      <td>Sweden 47.0%, United States of America 20.0%, United Kingdom 17.0%, Spain 4.0%, Germany 4.0%</td>
+      <td>2023-11-26</td>
+      <td>34</td>
+      <td>275</td>
+      <td class="desc-td" >Alias of B.1.1.529.2.86.1.1.6.1, S:R346T, Sweden, from sars-cov-2-variants/lineage-proposals#1089</td>
+      <div id="who_wrapper"><td id="who_JN.1.6.1"></td></div>
+
+    </tr>
+      
+
+      
+
+      
+    <tr>
+      
+      <td><a href="./lineage.html?lineage=JN.1.7">JN.1.7</a> </td>
+      
+      <td>United States of America 47.0%, United Kingdom 14.0%, Canada 10.0%, Spain 4.0%, Ireland 3.0%</td>
+      <td>2022-10-18</td>
+      <td>66</td>
+      <td>8276</td>
+      <td class="desc-td" >Alias of B.1.1.529.2.86.1.1.7, S:T572I, S:E1150D, USA/France, from sars-cov-2-variants/lineage-proposals#1097</td>
+      <div id="who_wrapper"><td id="who_JN.1.7"></td></div>
+
+    </tr>
+      
+
+      
+
+      
+    <tr>
+      
+      <td><a href="./lineage.html?lineage=JN.1.7.1">JN.1.7.1</a> </td>
+      
+      <td>United Kingdom 75.0%, United States of America 10.0%, New_Zealand 3.0%, Portugal 3.0%, Ireland 2.0%</td>
+      <td>2023-12-31</td>
+      <td>21</td>
+      <td>220</td>
+      <td class="desc-td" >Alias of B.1.1.529.2.86.1.1.7.1, S:R346K, England, from sars-cov-2-variants/lineage-proposals#1371</td>
+      <div id="who_wrapper"><td id="who_JN.1.7.1"></td></div>
+
+    </tr>
+      
+
+      
+
+      
+    <tr>
+      
+      <td><a href="./lineage.html?lineage=JN.1.7.2">JN.1.7.2</a> </td>
+      
+      <td>United States of America 38.0%, Canada 18.0%, Chile 10.0%, United Kingdom 9.0%, Argentina 5.0%</td>
+      <td>2023-12-09</td>
+      <td>110</td>
+      <td>861</td>
+      <td class="desc-td" >Alias of B.1.1.529.2.86.1.1.7.2, ORF1b:C1563F, Americas</td>
+      <div id="who_wrapper"><td id="who_JN.1.7.2"></td></div>
+
+    </tr>
+      
+
+      
+
+      
+    <tr>
+      
+      <td><a href="./lineage.html?lineage=JN.1.8">JN.1.8</a> </td>
+      
+      <td>United States of America 37.0%, United Kingdom 15.0%, Spain 7.0%, Canada 7.0%, France 4.0%</td>
+      <td>2023-02-26</td>
+      <td>110</td>
+      <td>1965</td>
+      <td class="desc-td" >Alias of B.1.1.529.2.86.1.1.8, ORF7a:T28I</td>
+      <div id="who_wrapper"><td id="who_JN.1.8"></td></div>
+
+    </tr>
+      
+
+      
+
+      
+    <tr>
+      
+      <td><a href="./lineage.html?lineage=JN.1.8.1">JN.1.8.1</a> </td>
+      
+      <td>United States of America 72.0%, Canada 16.0%, United Kingdom 2.0%, Japan 1.0%, Spain 1.0%</td>
+      <td>2023-02-26</td>
+      <td>96</td>
+      <td>3869</td>
+      <td class="desc-td" >Alias of B.1.1.529.2.86.1.1.8.1, S:T572I, after A12928G, USA/Denmark, from sars-cov-2-variants/lineage-proposals#1097</td>
+      <div id="who_wrapper"><td id="who_JN.1.8.1"></td></div>
+
+    </tr>
+      
+
+      
+
+      
+    <tr>
+      
+      <td><a href="./lineage.html?lineage=JN.1.9">JN.1.9</a> </td>
+      
+      <td>United States of America 43.0%, Spain 10.0%, United Kingdom 9.0%, Canada 8.0%, Puerto_Rico 5.0%</td>
+      <td>2023-10-03</td>
+      <td>238</td>
+      <td>3424</td>
+      <td class="desc-td" >Alias of B.1.1.529.2.86.1.1.9, S:Q183H, USA/UK/Canada, from #2410</td>
+      <div id="who_wrapper"><td id="who_JN.1.9"></td></div>
+
+    </tr>
+      
+
+      
+
+      
+    <tr>
+      
+      <td><a href="./lineage.html?lineage=JN.1.9.1">JN.1.9.1</a> </td>
+      
+      <td>United Kingdom 63.0%, Australia 7.0%, New_Zealand 7.0%, Ireland 5.0%, Canada 5.0%</td>
+      <td>2023-12-04</td>
+      <td>26</td>
+      <td>350</td>
+      <td class="desc-td" >Alias of B.1.1.529.2.86.1.1.9.1, S:T572I, ORF1a:A3143V, from sars-cov-2-variants/lineage-proposals#1097</td>
+      <div id="who_wrapper"><td id="who_JN.1.9.1"></td></div>
+
+    </tr>
+      
+
+      
+
+      
+    <tr>
+      
+      <td><a href="./lineage.html?lineage=JN.1.10">JN.1.10</a> </td>
+      
+      <td>United States of America 19.0%, Spain 10.0%, Canada 10.0%, Germany 9.0%, United Kingdom 8.0%</td>
+      <td>2023-11-07</td>
+      <td>29</td>
+      <td>159</td>
+      <td class="desc-td" >Alias of B.1.1.529.2.86.1.1.10, S:T95I, USA/Canada, from sars-cov-2-variants/lineage-proposals#1135</td>
+      <div id="who_wrapper"><td id="who_JN.1.10"></td></div>
+
+    </tr>
+      
+
+      
+
+      
+    <tr>
+      
+      <td><a href="./lineage.html?lineage=JN.1.11">JN.1.11</a> </td>
+      
+      <td>United States of America 30.0%, India 12.0%, Italy 12.0%, Spain 11.0%, Japan 7.0%</td>
+      <td>2023-12-07</td>
+      <td>2</td>
+      <td>1114</td>
+      <td class="desc-td" >Alias of B.1.1.529.2.86.1.1.11, S:V1104L, G17334T, India, from #2446</td>
+      <div id="who_wrapper"><td id="who_JN.1.11"></td></div>
+
+    </tr>
+      
+
+      
+
+      
+    <tr>
+      
+      <td><a href="./lineage.html?lineage=JN.1.11.1">JN.1.11.1</a> </td>
+      
+      <td>United States of America 25.0%, Canada 16.0%, Spain 10.0%, United Kingdom 9.0%, Japan 9.0%</td>
+      <td>2023-08-11</td>
+      <td>17</td>
+      <td>93253</td>
+      <td class="desc-td" >Alias of B.1.1.529.2.86.1.1.11.1, S:F456L (T22928C), after ORF1a:T2283I, India, from sars-cov-2-variants/lineage-proposals#1253</td>
+      <div id="who_wrapper"><td id="who_JN.1.11.1"></td></div>
+
+    </tr>
+      
+
+      
+
+      
+    <tr>
+      
+      <td><a href="./lineage.html?lineage=KP.1">KP.1</a> </td>
+      
+      <td>United States of America 39.0%, Canada 11.0%, Australia 7.0%, New_Zealand 7.0%, United Kingdom 6.0%</td>
+      <td>2023-12-30</td>
+      <td>28</td>
+      <td>915</td>
+      <td class="desc-td" >Alias of B.1.1.529.2.86.1.1.11.1.1, S:K1086R, from sars-cov-2-variants/lineage-proposals#1364</td>
+      <div id="who_wrapper"><td id="who_KP.1"></td></div>
+
+    </tr>
+      
+
+      
+
+      
+    <tr>
+      
+      <td><a href="./lineage.html?lineage=KP.1.1">KP.1.1</a> </td>
+      
+      <td>United States of America 44.0%, Canada 11.0%, Singapore 7.0%, United Kingdom 7.0%, Australia 3.0%</td>
+      <td>2024-01-27</td>
+      <td>8</td>
+      <td>11925</td>
+      <td class="desc-td" >Alias of B.1.1.529.2.86.1.1.11.1.1.1, S:R346T, from sars-cov-2-variants/lineage-proposals#1089</td>
+      <div id="who_wrapper"><td id="who_KP.1.1"></td></div>
+
+    </tr>
+      
+
+      
+
+      
+    <tr>
+      
+      <td><a href="./lineage.html?lineage=KP.2">KP.2</a> </td>
+      
+      <td>United States of America 44.0%, Canada 11.0%, United Kingdom 9.0%, Singapore 7.0%, France 3.0%</td>
+      <td>2023-07-05</td>
+      <td>7</td>
+      <td>33354</td>
+      <td class="desc-td" >Alias of B.1.1.529.2.86.1.1.11.1.2, S:R346T on JN.1.11.1 polytomy, from sars-cov-2-variants/lineage-proposals#1089</td>
+      <div id="who_wrapper"><td id="who_KP.2"></td></div>
+
+    </tr>
+      
+
+      
+
+      
+    <tr>
+      
+      <td><a href="./lineage.html?lineage=JN.1.12">JN.1.12</a> </td>
+      
+      <td>Italy 24.0%, South_Korea 22.0%, United States of America 18.0%, Poland 7.0%, Ireland 7.0%</td>
+      <td>2023-11-26</td>
+      <td>11</td>
+      <td>45</td>
+      <td class="desc-td" >Alias of B.1.1.529.2.86.1.1.12, S:F456V, ORF7a:A8T, from sars-cov-2-variants/lineage-proposals#1253</td>
+      <div id="who_wrapper"><td id="who_JN.1.12"></td></div>
+
+    </tr>
+      
+
+      
+
+      
+    <tr>
+      
+      <td><a href="./lineage.html?lineage=JN.1.13">JN.1.13</a> </td>
+      
+      <td>United States of America 32.0%, Sweden 15.0%, Canada 9.0%, Russia 8.0%, United Kingdom 7.0%</td>
+      <td>2023-12-10</td>
+      <td>21</td>
+      <td>171</td>
+      <td class="desc-td" >Alias of B.1.1.529.2.86.1.1.13, S:A1087S, after C26894T, C25680T, USA, from #2464</td>
+      <div id="who_wrapper"><td id="who_JN.1.13"></td></div>
+
+    </tr>
+      
+
+      
+
+      
+    <tr>
+      
+      <td><a href="./lineage.html?lineage=JN.1.13.1">JN.1.13.1</a> </td>
+      
+      <td>United States of America 38.0%, Canada 14.0%, Russia 12.0%, United Kingdom 7.0%, France 5.0%</td>
+      <td>2023-12-07</td>
+      <td>241</td>
+      <td>6189</td>
+      <td class="desc-td" >Alias of B.1.1.529.2.86.1.1.13.1, S:R346T, S:F59S, USA, from sars-cov-2-variants/lineage-proposals/issues/1386</td>
+      <div id="who_wrapper"><td id="who_JN.1.13.1"></td></div>
+
+    </tr>
+      
+
+      
+
+      
+    <tr>
+      
+      <td><a href="./lineage.html?lineage=JN.1.15">JN.1.15</a> </td>
+      
+      <td>United States of America 31.0%, Ecuador 14.0%, Spain 11.0%, United Kingdom 8.0%, Australia 5.0%</td>
+      <td>2023-11-09</td>
+      <td>50</td>
+      <td>731</td>
+      <td class="desc-td" >Alias of B.1.1.529.2.86.1.1.15, S:A688V</td>
+      <div id="who_wrapper"><td id="who_JN.1.15"></td></div>
+
+    </tr>
+      
+
+      
+
+      
+    <tr>
+      
+      <td><a href="./lineage.html?lineage=JN.1.16">JN.1.16</a> </td>
+      
+      <td>United States of America 36.0%, Canada 12.0%, China 7.0%, United Kingdom 6.0%, Spain 6.0%</td>
+      <td>2023-07-14</td>
+      <td>47</td>
+      <td>35192</td>
+      <td class="desc-td" >Alias of B.1.1.529.2.86.1.1.16, S:F456L (T22928C), from sars-cov-2-variants/lineage-proposals#1253</td>
+      <div id="who_wrapper"><td id="who_JN.1.16"></td></div>
+
+    </tr>
+      
+
+      
+
+      
+    <tr>
+      
+      <td><a href="./lineage.html?lineage=JN.1.18">JN.1.18</a> </td>
+      
+      <td>United States of America 32.0%, United Kingdom 10.0%, Canada 8.0%, France 4.0%, Japan 4.0%</td>
+      <td>2023-01-03</td>
+      <td>134</td>
+      <td>6497</td>
+      <td class="desc-td" >Alias of B.1.1.529.2.86.1.1.18, S:R346T, directly on JN.1 polytomy, from sars-cov-2-variants/lineage-proposals#1089</td>
+      <div id="who_wrapper"><td id="who_JN.1.18"></td></div>
+
+    </tr>
+      
+
+      
+
+      
+    <tr>
+      
+      <td><a href="./lineage.html?lineage=JN.1.19">JN.1.19</a> </td>
+      
+      <td>United States of America 30.0%, Netherlands 10.0%, United Kingdom 10.0%, Denmark 10.0%, Russia 8.0%</td>
+      <td>2023-10-02</td>
+      <td>715</td>
+      <td>1598</td>
+      <td class="desc-td" >Alias of B.1.1.529.2.86.1.1.19, ORF8:I71V</td>
+      <div id="who_wrapper"><td id="who_JN.1.19"></td></div>
+
+    </tr>
+      
+
+      
+
+      
+    <tr>
+      
+      <td><a href="./lineage.html?lineage=JN.1.20">JN.1.20</a> </td>
+      
+      <td>South_Korea 43.0%, China 13.0%, United States of America 13.0%, Australia 6.0%, Canada 4.0%</td>
+      <td>2023-01-02</td>
+      <td>66</td>
+      <td>1179</td>
+      <td class="desc-td" >Alias of B.1.1.529.2.86.1.1.20, S:S31F, directly on JN.1 polytomy</td>
+      <div id="who_wrapper"><td id="who_JN.1.20"></td></div>
+
+    </tr>
+      
+
+      
+
+      
+    <tr>
+      
+      <td><a href="./lineage.html?lineage=JN.1.22">JN.1.22</a> </td>
+      
+      <td>Canada 32.0%, United States of America 22.0%, United Kingdom 8.0%, Spain 4.0%, Belgium 4.0%</td>
+      <td>2023-10-22</td>
+      <td>1541</td>
+      <td>3104</td>
+      <td class="desc-td" >Alias of B.1.1.529.2.86.1.1.22, ORF1a:S505F, C13019T, from #2465</td>
+      <div id="who_wrapper"><td id="who_JN.1.22"></td></div>
+
+    </tr>
+      
+
+      
+
+      
+    <tr>
+      
+      <td><a href="./lineage.html?lineage=JN.1.23">JN.1.23</a> </td>
+      
+      <td>Brazil 72.0%, United States of America 16.0%, Canada 3.0%, South_Korea 3.0%, Portugal 2.0%</td>
+      <td>2024-01-01</td>
+      <td>48</td>
+      <td>270</td>
+      <td class="desc-td" >Alias of B.1.1.529.2.86.1.1.23, S:K444R, S:Y453F, ORF1a:A307V, ORF1a:P2144L, Brazil, from #2488</td>
+      <div id="who_wrapper"><td id="who_JN.1.23"></td></div>
+
+    </tr>
+      
+
+      
+
+      
+    <tr>
+      
+      <td><a href="./lineage.html?lineage=JN.1.24">JN.1.24</a> </td>
+      
+      <td>United States of America 55.0%, United Kingdom 10.0%, Costa_Rica 5.0%, Spain 5.0%, Israel 4.0%</td>
+      <td>2023-11-10</td>
+      <td>117</td>
+      <td>189</td>
+      <td class="desc-td" >Alias of B.1.1.529.2.86.1.1.24, S:C1243F, USA</td>
+      <div id="who_wrapper"><td id="who_JN.1.24"></td></div>
+
+    </tr>
+      
+
+      
+
+      
+    <tr>
+      
+      <td><a href="./lineage.html?lineage=JN.1.25.1">JN.1.25.1</a> </td>
+      
+      <td>United States of America 31.0%, United Kingdom 31.0%, India 19.0%, Canada 12.0%, Netherlands 6.0%</td>
+      <td>2023-12-17</td>
+      <td>16</td>
+      <td>52</td>
+      <td class="desc-td" >Alias of B.1.1.529.2.86.1.1.25.1, S:R346T, India</td>
+      <div id="who_wrapper"><td id="who_JN.1.25.1"></td></div>
+
+    </tr>
+      
+
+      
+
+      
+    <tr>
+      
+      <td><a href="./lineage.html?lineage=JN.2">JN.2</a> </td>
+      
+      <td>Sweden 34.0%, United Kingdom 16.0%, Canada 12.0%, United States of America 8.0%, Japan 5.0%</td>
+      <td>2022-10-22</td>
+      <td>111</td>
+      <td>3986</td>
+      <td class="desc-td" >Alias of B.1.1.529.2.86.1.2, ORF1a:Y621C, Europe/North America, from #2284</td>
+      <div id="who_wrapper"><td id="who_JN.2"></td></div>
+
+    </tr>
+      
+
+      
+
+      
+    <tr>
+      
+      <td><a href="./lineage.html?lineage=JN.2.2">JN.2.2</a> </td>
+      
+      <td>Netherlands 43.0%, Germany 12.0%, Turkey 10.0%, United Kingdom 6.0%, Sweden 5.0%</td>
+      <td>2023-10-27</td>
+      <td>41</td>
+      <td>129</td>
+      <td class="desc-td" >Alias of B.1.1.529.2.86.1.2.2, S:T572I, N:G25C, ORF1a:L3644F, Netherlands, from #2433</td>
+      <div id="who_wrapper"><td id="who_JN.2.2"></td></div>
+
+    </tr>
+      
+
+      
+
+      
+    <tr>
+      
+      <td><a href="./lineage.html?lineage=JN.6">JN.6</a> </td>
+      
+      <td>United Kingdom 47.0%, United States of America 9.0%, Lithuania 8.0%, Denmark 7.0%, Finland 4.0%</td>
+      <td>2023-09-12</td>
+      <td>36</td>
+      <td>721</td>
+      <td class="desc-td" >Alias of B.1.1.529.2.86.1.6, S:V193L</td>
+      <div id="who_wrapper"><td id="who_JN.6"></td></div>
+
+    </tr>
+      
+
+      
+
+      
+    <tr>
+      
+      <td><a href="./lineage.html?lineage=JN.11">JN.11</a> </td>
+      
+      <td>Japan 34.0%, Denmark 18.0%, United States of America 13.0%, South_Korea 8.0%, Singapore 6.0%</td>
+      <td>2023-04-12</td>
+      <td>78</td>
+      <td>384</td>
+      <td class="desc-td" >Alias of B.1.1.529.2.86.1.11, S:V1104L, Asia, from sars-cov-2-variants/lineage-proposals#1303</td>
+      <div id="who_wrapper"><td id="who_JN.11"></td></div>
+
+    </tr>
+      
+
+      
+
+      
+    <tr>
+      
+      <td><a href="./lineage.html?lineage=JQ.2">JQ.2</a> </td>
+      
+      <td>South_Africa 57.0%, Canada 13.0%, United Kingdom 13.0%, United States of America 7.0%, Netherlands 3.0%</td>
+      <td>2023-09-28</td>
+      <td>5</td>
+      <td>101</td>
+      <td class="desc-td" >Alias of B.1.1.529.2.86.3.2, S:R346T, G2944A, South Africa, from #2505</td>
+      <div id="who_wrapper"><td id="who_JQ.2"></td></div>
+
+    </tr>
+      
+
+      
+
+      
+    <tr>
+      
+      <td><a href="./lineage.html?lineage=BA.4.6">BA.4.6</a> </td>
+      
+      <td>United States of America 60.0%, Canada 7.0%, United Kingdom 6.0%, France 3.0%, Denmark 3.0%</td>
+      <td>2020-02-02</td>
+      <td>1179</td>
+      <td>53217</td>
+      <td class="desc-td" >Alias of B.1.1.529.4.6, mainly found in USA, England and Denmark, from #741</td>
+      <div id="who_wrapper"><td id="who_BA.4.6"></td></div>
+
+    </tr>
+      
+
+      
+
+      
+    <tr>
+      
+      <td><a href="./lineage.html?lineage=BA.5.1">BA.5.1</a> </td>
+      
+      <td>United States of America 18.0%, Germany 11.0%, France 10.0%, United Kingdom 10.0%, Denmark 7.0%</td>
+      <td>2020-03-14</td>
+      <td>23500</td>
+      <td>229728</td>
+      <td class="desc-td" >Alias of B.1.1.529.5.1, Portugal lineage</td>
+      <div id="who_wrapper"><td id="who_BA.5.1"></td></div>
+
+    </tr>
+      
+
+      
+
+      
+    <tr>
+      
+      <td><a href="./lineage.html?lineage=BA.5.1.14">BA.5.1.14</a> </td>
+      
+      <td>Brazil 86.0%, Chile 5.0%, Spain 5.0%, Italy 2.0%, Peru 2.0%</td>
+      <td>2022-05-13</td>
+      <td>29</td>
+      <td>44</td>
+      <td class="desc-td" >Alias of B.1.1.529.5.1.14, mainly found in Brazil</td>
+      <div id="who_wrapper"><td id="who_BA.5.1.14"></td></div>
+
+    </tr>
+      
+
+      
+
+      
+    <tr>
+      
+      <td><a href="./lineage.html?lineage=BA.5.1.17">BA.5.1.17</a> </td>
+      
+      <td>France 52.0%, Germany 10.0%, United States of America 5.0%, Denmark 4.0%, Belgium 4.0%</td>
+      <td>2021-11-15</td>
+      <td>801</td>
+      <td>1963</td>
+      <td class="desc-td" >Alias of B.1.1.529.5.1.17, France lineage</td>
+      <div id="who_wrapper"><td id="who_BA.5.1.17"></td></div>
+
+    </tr>
+      
+
+      
+
+      
+    <tr>
+      
+      <td><a href="./lineage.html?lineage=BA.5.2">BA.5.2</a> </td>
+      
+      <td>Japan 18.0%, United States of America 17.0%, Germany 7.0%, United Kingdom 6.0%, Russia 5.0%</td>
+      <td>2020-07-02</td>
+      <td>10665</td>
+      <td>279184</td>
+      <td class="desc-td" >Alias of B.1.1.529.5.2, mainly found in South Africa, England and USA, from #551</td>
+      <div id="who_wrapper"><td id="who_BA.5.2"></td></div>
+
+    </tr>
+      
+
+      
+
+      
+    <tr>
+      
+      <td><a href="./lineage.html?lineage=BF.7.21">BF.7.21</a> </td>
+      
+      <td>Germany 21.0%, United States of America 10.0%, Canada 10.0%, Belgium 8.0%, United Kingdom 8.0%</td>
+      <td>2022-03-11</td>
+      <td>1973</td>
+      <td>2230</td>
+      <td class="desc-td" >Alias of B.1.1.529.5.2.1.7.21, C28603T</td>
+      <div id="who_wrapper"><td id="who_BF.7.21"></td></div>
+
+    </tr>
+      
+
+      
+
+      
+    <tr>
+      
+      <td><a href="./lineage.html?lineage=BF.13">BF.13</a> </td>
+      
+      <td>United States of America 64.0%, Canada 8.0%, Japan 7.0%, Germany 4.0%, Sweden 3.0%</td>
+      <td>2022-06-09</td>
+      <td>36</td>
+      <td>2614</td>
+      <td class="desc-td" >Alias of B.1.1.529.5.2.1.13, mainly found in USA, from #883</td>
+      <div id="who_wrapper"><td id="who_BF.13"></td></div>
+
+    </tr>
+      
+
+      
+
+      
+    <tr>
+      
+      <td><a href="./lineage.html?lineage=BF.31.1">BF.31.1</a> </td>
+      
+      <td>Chile 64.0%, Canada 12.0%, United States of America 12.0%, Austria 3.0%, Australia 2.0%</td>
+      <td>2022-07-27</td>
+      <td>99</td>
+      <td>777</td>
+      <td class="desc-td" >Alias of B.1.1.529.5.2.1.31.1, Chile, S:A701V and S:S247N/S:Y248-</td>
+      <div id="who_wrapper"><td id="who_BF.31.1"></td></div>
+
+    </tr>
+      
+
+      
+
+      
+    <tr>
+      
+      <td><a href="./lineage.html?lineage=BQ.1.1.32">BQ.1.1.32</a> </td>
+      
+      <td>United States of America 84.0%, United Kingdom 3.0%, Spain 3.0%, Japan 2.0%, Canada 2.0%</td>
+      <td>2021-11-30</td>
+      <td>195</td>
+      <td>3159</td>
+      <td class="desc-td" >Alias of B.1.1.529.5.3.1.1.1.1.1.1.32 found mainly in USA, S:153I, S:144-, from #1402</td>
+      <div id="who_wrapper"><td id="who_BQ.1.1.32"></td></div>
+
+    </tr>
+      
+
+      
+
+      
+    <tr>
+      
+      <td><a href="./lineage.html?lineage=DT.3">DT.3</a> </td>
+      
+      <td>United States of America 98.0%, Germany 1.0%, Sweden 1.0%</td>
+      <td>2022-11-26</td>
+      <td>50</td>
+      <td>106</td>
+      <td class="desc-td" >Alias of B.1.1.529.5.3.1.1.1.1.1.1.32.3 USA, S:L176F</td>
+      <div id="who_wrapper"><td id="who_DT.3"></td></div>
+
+    </tr>
+      
+
+      
+
+      
+    <tr>
+      
+      <td><a href="./lineage.html?lineage=BQ.1.3.2">BQ.1.3.2</a> </td>
+      
+      <td>United States of America 76.0%, Canada 5.0%, United Kingdom 3.0%, Japan 2.0%, Germany 2.0%</td>
+      <td>2022-08-01</td>
+      <td>2379</td>
+      <td>4353</td>
+      <td class="desc-td" >Alias of B.1.1.529.5.3.1.1.1.1.1.3.2, ORF1a:L1853F, USA</td>
+      <div id="who_wrapper"><td id="who_BQ.1.3.2"></td></div>
+
+    </tr>
+      
+
+      
+
+      
+    <tr>
+      
+      <td><a href="./lineage.html?lineage=BQ.1.22">BQ.1.22</a> </td>
+      
+      <td>United States of America 24.0%, Canada 22.0%, Germany 11.0%, United Kingdom 11.0%, France 7.0%</td>
+      <td>2022-09-26</td>
+      <td>12</td>
+      <td>861</td>
+      <td class="desc-td" >Alias of B.1.1.529.5.3.1.1.1.1.1.22, Canada, S:R346T after C26681T</td>
+      <div id="who_wrapper"><td id="who_BQ.1.22"></td></div>
+
+    </tr>
+      
+
+      
+
+      
+    <tr>
+      
+      <td><a href="./lineage.html?lineage=BA.5.9">BA.5.9</a> </td>
+      
+      <td>Germany 39.0%, United States of America 9.0%, United Kingdom 8.0%, Denmark 6.0%, France 4.0%</td>
+      <td>2022-01-24</td>
+      <td>217</td>
+      <td>8966</td>
+      <td class="desc-td" >Alias of B.1.1.529.5.9, mainly found in Germany, Switzerland and Denmark, from #753</td>
+      <div id="who_wrapper"><td id="who_BA.5.9"></td></div>
+
+    </tr>
+      
+    
+  </table>
+  </div>
+
+
+  <script type="text/javascript">
+
+	var relevantDefs =  new Map();
+
+	getOtherNames=function(lineage) {
+
+		console.log(lineage);
+
+		if(relevantDefs.get(lineage) == true) {
+
+		    var pageName = "c" + lineage + ".json";
+		    var directory = "https://raw.githubusercontent.com/cov-lineages/constellations/main/constellations/definitions/";
+			
+            d3.json(directory + pageName, function(json){
+              whoName = json["variant"]["WHO_label"];
+
+                // add to UI
+
+                if(whoName && whoName.length > 0) {
+
+                	var id = "who_" + lineage;
+
+                	id = id.replace(/\./g, "_");
+
+                	$("#" + id).text(whoName);
+
+                	console.log($("#" + id));
+                }
+            });
+		       
+		    
+		}
+	}
+
+	
+	var url = "https://api.github.com/repos/cov-lineages/constellations/contents/constellations/definitions"
+
+	d3.json(url, function(json){
+      for(var c of json) {
+      	var name = c.name;
+
+      	console.log(name);
+
+      	name = name.split("\.json")[0];
+      	console.log(name);
+      	name = name.substring(1);
+      	console.log(name);
+
+		relevantDefs.set(name, true);
+      }
+
+      for(var row of $("#myTable").children()[1].children) {
+			var child = row.children[6];
+
+			var id = child.id;
+			var lineage = id.split("who_")[1];
+
+			id = id.replace(/\./g, "_");
+
+
+			child.setAttribute("id", id);
+
+			getOtherNames(lineage);
+
+		}
+
+      
+    });
+	
+</script>
+</div>
+    <script defer src="https://use.fontawesome.com/releases/v5.0.8/js/all.js" integrity="sha384-SlE991lGASHoBfWbelyBPLsUlwY1GwNDJo3jSJO04KZ33K2bwfV9YBauFfnzvynJ" crossorigin="anonymous"></script>
+<script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
+<script src="https://cov-lineages.org/assets/javascripts/uieffects.js"></script>
+
+<footer class="footer">
+	© SARS-CoV-2 lineages<br>
+	Design by Emily Scher<br>
+	Text by Áine O'Toole, Emily Scher, and Andrew Rambaut<br><br>
+</footer>
+  </body>
+</html>
