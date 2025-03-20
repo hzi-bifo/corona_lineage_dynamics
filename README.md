@@ -168,19 +168,37 @@ JP.interactive.html
 ```
 
 # Errors
-If you receive any error related to the network problem, please try to fix your network problem and make sure you can access this like inside your network. Some potential network errors could be
+During execution, the pipeline retrieves alias and lineage files from cov-lineages.org using an R script (get_alias_list.R). In some cases, the connection may timeout, resulting in an error like:
+
 ```
-Error in function (type, msg, asError = TRUE)  : 
-  Failed to connect to cov-lineages.org port 443 after 129736 ms: Could not connect to server
-Calls: getURL -> curlPerform -> <Anonymous> -> fun
+Error in function(type, msg, asError = TRUE) :
+Connection timed out after 300040 milliseconds
+Calls: getURL -> curlPerform -> -> fun
 Execution halted
 ```
-Or
+
+To prevent this issue, we have added automatic fallback mechanisms:
+* The script first tries to download the page "https://cov-lineages.org/lineage_list.html".
+* If it fails, the script tries to use the pre-downloaded version of the file located at `testdata/lineage_list.html".
+
+### Solution 1: Check Your Internet Connection (Recommended)
+If the download fails due to a network issue, follow these steps:
+* Make sure you have a stable internet connection.
+* Try accessing the link "https://cov-lineages.org/lineage_list.html" directly in your browser:
+* If you cannot access the link, your network may have firewall restrictions.
+  * Try running the script on a different network.
+  * Use a VPN if necessary.
+
+### Solution 2: Pre-Download Required Files
+To avoid any network-related issues, we recommend manually downloading the alias file before running the pipeline.
+
+Step 1: Download the required files manually
 ```
-Error in function (type, msg, asError = TRUE)  : 
-  Could not resolve host: cov-lineages.org
-Calls: getURL -> curlPerform -> <Anonymous> -> fun
-Execution halted
+mkdir -p testdata
+wget -O testdata/lineage_list.html https://cov-lineages.org/lineage_list.html
 ```
-If the pipeline encounters these errors, it will automatically switch to the local version of the data inside the repository.
-Note that in this case, the data may not be up-to-date. Fixing the network connection will fix this issue.
+
+Step 2: Run the pipeline using local files
+```
+bash SDPlots_lineages_local.sh testdata/metadata.tsv testdata/months.txt outputs 0.1
+```
