@@ -202,3 +202,12 @@ Step 2: Run the pipeline using local files
 ```
 bash SDPlots_lineages_local.sh testdata/metadata.tsv testdata/months.txt outputs 0.1
 ```
+
+### Solution 3: Run With the Current Version of the Data
+If none of the previous solutions work, a current version of the file [lineage_list.html](https://cov-lineages.org/lineage_list.html) is already available in the `testdata/` folder.
+This allows the pipeline to run without any errors. However, please ensure that the file is up-to-date if you intend to run the pipeline on recent datasets.
+
+To execute the pipeline, run:
+```
+bash SDPlots_lineages_local.sh testdata/metadata.tsv testdata/months.txt outputs 0.1
+```
