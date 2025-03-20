@@ -1,9 +1,9 @@
 # corona_lineage_dynamics
 
-This repository contains scripts to calculate frequences of pangolin lineages based on the GISAID metadata file and to compute and visualize their trajectories.
+This repository contains scripts to calculate the frequencies of Pangolin lineages based on the GISAID metadata file and to compute and visualize their trajectories.
 
 ## Requirements
-This README file is designed for linux system with installed conda. 
+This README file is designed for a Linux system with Conda installed.
 We tested the installation on Ubuntu 23.10 and conda 24.3.0. 
 
 Here we present three options for installing and working with corona_lineage_dynamics: 1) installing from source, 2) installing bioconda package, and 3) singularity container.
@@ -16,8 +16,8 @@ git clone https://github.com/hzi-bifo/corona_lineage_dynamics.git
 cd corona_lineage_dynamics
 ```
 
-Creating conda environment with required dependencies is the simplest way. 
-For making the C/C++ codes, C++ compiler with boost_regex development packages required to be installed.
+Creating a Conda environment with the required dependencies is the simplest method.
+To compile the C/C++ code, a C++ compiler with the `boost_regex` development package must be installed.
 ```
 conda env create -f environment.yml
 conda activate corona_lineage_dynamics
@@ -53,7 +53,8 @@ To analyse the test data, run:
 bash SDPlots_lineages_local.sh testdata/metadata.tsv testdata/months.txt outputs 0.1
 ```
 
-If everything goes well, the pipeline will print several lines of log. The last line should be
+If everything runs successfully, the pipeline will print several log messages.
+The last line should be
 ```
 ENDING ./SDPlots_lineages.sh
 ```
@@ -71,7 +72,8 @@ Error in function (type, msg, asError = TRUE)  :
 Calls: getURL -> curlPerform -> <Anonymous> -> fun
 Execution halted
 ```
-If the pipeline encounter these errors, it will automatically switch to a version of the code inside the repository. Note that in this case, the data could not be up-to-date. Fixing the network connection will fix this issue.
+If the pipeline encounters these errors, it will automatically switch to the local version of the data inside the repository.
+Note that in this case, the data could not be up-to-date. Fixing the network connection will fix this issue.
 
 Also, besides the files inside the `outputs` folder, the pipeline should create the following files.
 ```
@@ -90,7 +92,7 @@ JP.interactive.html
 ```
 
 # Bioconda package installation
-You can install this pipeline through installing its bioconda package. For that, run the following command:
+You can install this pipeline by using its Bioconda package. For that, run the following command:
 ```
 conda install bioconda::corona_lineage_dynamics
 ```
@@ -128,7 +130,7 @@ JP.interactive.html
 ```
 
 # Singularity container installation
-Assuming the singularity is installed on the machine, first we assure that `cloud.sylabs.io` is already in the remote list. We can check the remote list with the following command
+Assuming Singularity is installed on the machine, we first assure that `cloud.sylabs.io` is already in the remote list. We can check the remote list with the following command
 ```
 singularity remote list
 ```
