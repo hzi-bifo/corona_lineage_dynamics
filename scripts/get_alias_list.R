@@ -35,7 +35,6 @@ parse_html <- function(lineage_html) {
 # read html page
 tryCatch( 
     {
-        # DEBUG!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
         lineage_html <- getURL("https://cov-lineages.org/lineage_list.html", .opts = list(ssl.verifypeer = FALSE))
         parse_html(lineage_html)
     }, 
