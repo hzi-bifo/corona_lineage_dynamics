@@ -1,0 +1,51 @@
+Bootstrap: docker
+From: condaforge/miniforge3:latest
+
+%help
+    This image is built for running the `SDPlots_lineages_local.sh` script from the `corona_lineage_dynamics` repository.
+    It ensures the Conda environment is always activated automatically.
+
+%post -c /bin/bash
+    apt-get update && apt-get install -y \
+        git bash 
+
+    # Clone the repository into /opt
+    mkdir -p /opt
+    cd /opt
+    git clone --depth 1 https://github.com/hzi-bifo/corona_lineage_dynamics.git
+    cd corona_lineage_dynamics
+    git fetch --tags
+    git checkout tags/v0.1.7 
+
+    # Set up the Conda environment
+    conda env create -f environment.yml
+    . /opt/conda/etc/profile.d/conda.sh
+    conda activate corona_lineage_dynamics
+
+    cd /opt/corona_lineage_dynamics/
+    rm -f scripts/count_lineages_country
+    make scripts/count_lineages_country
+    cat >/opt/corona_lineage_dynamics/SDPlots_lineages_singularity.sh <<EOF
+#!/bin/bash
+. /opt/conda/etc/profile.d/conda.sh
+conda activate corona_lineage_dynamics
+/opt/corona_lineage_dynamics/SDPlots_lineages_local.sh "\$1" "\$2" "\$3" "\$4"
+EOF
+    chmod +x /opt/corona_lineage_dynamics/SDPlots_lineages_singularity.sh
+
+
+
+%environment
+    # Set default paths for the repository and scripts
+    export REPO_DIR=/opt/corona_lineage_dynamics
+    export PATH=/opt/conda/bin:$REPO_DIR/bin:$PATH
+
+%runscript
+    #!/bin/bash
+    #. /opt/conda/etc/profile.d/conda.sh
+    #conda activate corona_lineage_dynamics
+    echo "Run the script as follows:"
+    echo "singularity exec corona_lineage_dynamics_latest.sif /opt/corona_lineage_dynamics/SDPlots_lineages_singularity.sh [METADATA-FILE] [MONTHS-FILE] [OUTPUT-FOLDER] 0.1"
+    echo "Run the script on the test data as follows:"
+    echo "singularity exec corona_lineage_dynamics_latest.sif /opt/corona_lineage_dynamics/SDPlots_lineages_singularity.sh /opt/corona_lineage_dynamics/testdata/metadata.tsv /opt/corona_lineage_dynamics/testdata/months.txt output 0.1"
+    exec "$@"
