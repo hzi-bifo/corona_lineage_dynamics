@@ -39,6 +39,9 @@ bash SDplots_lineages_local.sh \
 
 where the Metadata file is the metadata file downloaded from GISAID, the Months file is a file listing all months to be analysed (see the example in the folder testdata), the output folder is the name of the folder generated to store all results in, and the threshold is the frequency threshold for considering a lineage predominant (for SARS-CoV-2, a low value like 0.1 makes sense). 
 
+> [!IMPORTANT]
+> Before running this pipeline, ensure you have an internet connection and the right setting for the `curl` and `wget` commands. While the pipeline can run successfully without internet access, you may encounter error messages, and the data used might not be up-to-date.
+
 ### Running the pipeline on simulated dataset (approx. 8 min)
 A sample (simulated) dataset is provided in folder `testdata` for testing. 
 First we need to create an output folder:
